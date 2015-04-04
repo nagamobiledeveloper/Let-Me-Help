@@ -41,23 +41,19 @@
     self.lManager.delegate = self;
     self.lManager.distanceFilter = kCLDistanceFilterNone;
     self.lManager.desiredAccuracy = kCLLocationAccuracyBest;
-    
     if([self.lManager respondsToSelector:@selector(requestWhenInUseAuthorization)])
     {
         [self.lManager requestWhenInUseAuthorization];
     }
+    [self updateCurrentLocation];
     
     self.types = [Types getInstance];
     [self.customTableView setAllowsSelection:YES];
     self.customTableView.delegate = self;
-    
     self.placesArray = [[NSArray alloc] init];
     self.placesArray = [[self.types differentSearchPlacesArray] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-}
-
--(void)viewWillAppear:(BOOL)animated
-{
-    [self.lManager startUpdatingLocation];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCurrentLocation) name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -65,6 +61,13 @@
     [super didReceiveMemoryWarning];
 }
 
+#pragma mark - Helpers
+- (void)updateCurrentLocation
+{
+    [self.lManager startUpdatingLocation];
+}
+
+#pragma mark - Location Manager
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     CLLocation *location = [locations lastObject];
@@ -258,6 +261,11 @@
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
 {
     self.customSearchBar.showsCancelButton = NO;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end
