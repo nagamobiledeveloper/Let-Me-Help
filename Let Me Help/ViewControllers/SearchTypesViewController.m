@@ -48,6 +48,7 @@
     [self updateCurrentLocation];
     
     self.types = [Types getInstance];
+    
     [self.customTableView setAllowsSelection:YES];
     self.customTableView.delegate = self;
     self.placesArray = [[NSArray alloc] init];
