@@ -19,6 +19,7 @@
 
 @implementation PopOverDirectionsViewController
 
+#pragma mark - Life cycle methods
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.location = [LocationObject getInstance];

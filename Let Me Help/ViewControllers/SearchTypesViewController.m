@@ -72,14 +72,25 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     CLLocation *location = [locations lastObject];
-    
     [self.location setLatitude:location.coordinate.latitude];
     [self.location setLongitude:location.coordinate.longitude];
+    
     [self.lManager stopUpdatingLocation];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
+//    Austin
+//    30.3077609,-97.7534014
+
+//    Shanghai
+//    31.2243489, 121.4767528
+    
+//    Dubai
+//    24.979447,55.3127729
+    
+//    Hyderabad
+//    17.439186,78.4446354
     Reachability * reach = [Reachability reachabilityWithHostname:GOOGLE_WEBSITE];
     if (![reach isReachable])
     {
@@ -194,7 +205,6 @@
                selectionViewController.titleString = [self.copiedArray objectAtIndex:indexPath.row];
                 selectionViewController.secondarySearchString = nil;
             }else {
-                self.isSearching = NO;
                 selectionViewController.titleString = self.searchString;
                 selectionViewController.secondarySearchString = [self.searchString stringByReplacingOccurrencesOfString:@" " withString:@"+"];
             }

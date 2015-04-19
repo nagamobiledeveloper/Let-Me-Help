@@ -17,7 +17,7 @@
 
 #define MINIMUM_COUNT 7
 
-@interface ResultsTableViewController ()<NSURLConnectionDelegate, CLLocationManagerDelegate>
+@interface ResultsTableViewController ()<NSURLConnectionDelegate, CLLocationManagerDelegate, UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *customSelectionTableView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *customActivityIndicator;
@@ -37,6 +37,7 @@
 
 @implementation ResultsTableViewController
 
+#pragma mark - Life cycle methods
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -86,6 +87,12 @@
     [firstTask resume];
 }
 
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+}
+
+#pragma mark - Helper methods
 -(NSArray *)getDistanceFromCurrentLocation:(NSArray *)locationDetails
 {
     NSMutableArray *milesArray = [[NSMutableArray alloc] init];
@@ -202,9 +209,6 @@
                                                       cancelButtonTitle:@"OK"
                                                       otherButtonTitles:nil];
                 [alert show];
-                
-                NSArray *viewControllers = self.navigationController.viewControllers;
-                [self.navigationController popToViewController:[viewControllers firstObject] animated:YES];
             });
         }
     }];
@@ -218,9 +222,10 @@
     [self.customSelectionTableView reloadData];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
+#pragma mark - AlertView delegate methods
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    NSArray *viewControllers = self.navigationController.viewControllers;
+    [self.navigationController popToViewController:[viewControllers firstObject] animated:YES];
 }
 
 #pragma mark - Table view datasource methods
@@ -286,7 +291,7 @@
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"We are Sorry!!"
                                                         message:@"Please connect to the internet to proceed."
-                                                       delegate:self
+                                                       delegate:nil
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
         [alert show];
