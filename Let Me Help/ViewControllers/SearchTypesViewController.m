@@ -94,7 +94,7 @@
     Reachability * reach = [Reachability reachabilityWithHostname:GOOGLE_WEBSITE];
     if (![reach isReachable])
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"We are Sorry!!"
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"We are sorry!!"
                                                     message:@"Please connect to internet to improve user location accuracy."
                                                    delegate:self
                                           cancelButtonTitle:@"OK"
@@ -163,28 +163,28 @@
 #pragma mark - Segue methods
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
 {
+//    [self.location setLatitude:30.3077609];
+//    [self.location setLongitude:-97.7534014];
     Reachability * reach = [Reachability reachabilityWithHostname:GOOGLE_WEBSITE];
     if ([reach isReachable] && self.location.latitude != 0.0 && self.location.longitude != 0.0)
     {
         return YES;
     }else if(![reach isReachable])
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"We are Sorry!!"
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"We are sorry!!"
                                                         message:@"Please connect to the internet to proceed."
                                                        delegate:self
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
         [alert show];
-        return NO;
     }else if(self.location.latitude == 0.0 || self.location.longitude == 0.0)
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"We are Sorry!!"
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"We are sorry!!"
                                                         message:@"We are not able to get your current location. Please make sure your Location Services are turned ON."
                                                        delegate:self
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
         [alert show];
-        return NO;
     }
     return NO;
 }

@@ -11,6 +11,7 @@
 #import "Annotation.h"
 #import "PopOverMapsViewController.h"
 #import "LocationObject.h"
+#import "WebViewController.h"
 
 #define BUTTON_INDEX_ZERO 0
 #define BUTTON_INDEX_ONE 1
@@ -232,6 +233,12 @@
     
     [self.customMapView addAnnotations:annotationObjects];
     [self.customMapView setRegion:region animated:YES];
+    
+    if (self.website != nil && ![self.website isKindOfClass:[NSNull class]]) {
+        UIBarButtonItem *websiteButton = [[UIBarButtonItem alloc] initWithTitle:@"Website" style:UIBarButtonItemStylePlain target:self action:@selector(showWebsite)];
+        websiteButton.tintColor = [UIColor blueColor];
+        self.navigationItem.rightBarButtonItem = websiteButton;
+    }
 }
 
 - (void)closePopOver
@@ -240,6 +247,17 @@
         [self.popoverVC dismissPopoverAnimated:NO];
         self.popoverVC = nil;
     }
+}
+
+- (void)showWebsite {
+    NSBundle *lmsBundle = [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"LMHResources" ofType:@"bundle"]];
+    
+    //now load and show updated results popover
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:lmsBundle];
+    
+    WebViewController *webViewController = [storyboard instantiateViewControllerWithIdentifier:@"webViewController"];
+    webViewController.url = self.website;
+    [self presentViewController:webViewController animated:YES completion:nil];
 }
 
 @end

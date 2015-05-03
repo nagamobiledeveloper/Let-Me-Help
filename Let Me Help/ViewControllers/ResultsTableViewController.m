@@ -203,7 +203,7 @@
         {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.customActivityIndicator stopAnimating];
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"We are Sorry!!"
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"We are sorry!!"
                                                                 message:[NSString stringWithFormat:@"We didn't find any %@ open at this time near your current location. Please try again later.", self.titleString]
                                                                delegate:self
                                                       cancelButtonTitle:@"OK"
@@ -289,7 +289,7 @@
         return YES;
     }else
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"We are Sorry!!"
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"We are sorry!!"
                                                         message:@"Please connect to the internet to proceed."
                                                        delegate:nil
                                               cancelButtonTitle:@"OK"
