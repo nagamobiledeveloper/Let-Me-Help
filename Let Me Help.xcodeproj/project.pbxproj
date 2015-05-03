@@ -22,7 +22,6 @@
 		3098C8031ACCB52D00EBB8D1 /* SearchTypesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3098C7FE1ACCB52D00EBB8D1 /* SearchTypesViewController.m */; };
 		3098C8061ACCB56200EBB8D1 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 3098C8051ACCB56200EBB8D1 /* Reachability.m */; };
 		3098C8091ACCB57C00EBB8D1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3098C8081ACCB57C00EBB8D1 /* AppDelegate.m */; };
-		3098C8191ACCB5D200EBB8D1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3098C8181ACCB5D200EBB8D1 /* Main.storyboard */; };
 		3098C8911ACCD7B100EBB8D1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3098C8901ACCD7B100EBB8D1 /* Images.xcassets */; };
 		4465C8D21946605B00DA5670 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4465C8D11946605B00DA5670 /* CoreData.framework */; };
 		4466FE611935637200EC7504 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4466FE601935637200EC7504 /* Foundation.framework */; };
@@ -34,6 +33,8 @@
 		447CAA2B197832910022842C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 447CAA2A197832910022842C /* MapKit.framework */; };
 		44F8FDED1981BAAA0003AC5D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44F8FDEC1981BAAA0003AC5D /* Security.framework */; };
 		44F8FDEF1981BAB30003AC5D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44F8FDEE1981BAB30003AC5D /* SystemConfiguration.framework */; };
+		66A28D9C1AF5A08C00FCB670 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A28D9B1AF5A08C00FCB670 /* WebViewController.m */; };
+		66A28D9D1AF5AB1B00FCB670 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3098C8181ACCB5D200EBB8D1 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +89,8 @@
 		447CAA2A197832910022842C /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		44F8FDEC1981BAAA0003AC5D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		44F8FDEE1981BAB30003AC5D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		66A28D9A1AF5A08C00FCB670 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebViewController.h; path = ViewControllers/WebViewController.h; sourceTree = "<group>"; };
+		66A28D9B1AF5A08C00FCB670 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebViewController.m; path = ViewControllers/WebViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +164,8 @@
 				3098C7FC1ACCB52D00EBB8D1 /* ResultsTableViewController.m */,
 				3098C7F51ACCB52D00EBB8D1 /* ResultDetailViewController.h */,
 				3098C7F61ACCB52D00EBB8D1 /* ResultDetailViewController.m */,
+				66A28D9A1AF5A08C00FCB670 /* WebViewController.h */,
+				66A28D9B1AF5A08C00FCB670 /* WebViewController.m */,
 				3098C7F91ACCB52D00EBB8D1 /* PopOverMapsViewController.h */,
 				3098C7FA1ACCB52D00EBB8D1 /* PopOverMapsViewController.m */,
 				3098C7F71ACCB52D00EBB8D1 /* PopOverDirectionsViewController.h */,
@@ -363,7 +368,7 @@
 				3093A5A31ACE0C02003930C7 /* LMHResources.bundle in Resources */,
 				3098C8911ACCD7B100EBB8D1 /* Images.xcassets in Resources */,
 				4466FE6B1935637200EC7504 /* InfoPlist.strings in Resources */,
-				3098C8191ACCB5D200EBB8D1 /* Main.storyboard in Resources */,
+				66A28D9D1AF5AB1B00FCB670 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -382,6 +387,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3098C8031ACCB52D00EBB8D1 /* SearchTypesViewController.m in Sources */,
+				66A28D9C1AF5A08C00FCB670 /* WebViewController.m in Sources */,
 				3098C8021ACCB52D00EBB8D1 /* ResultsTableViewController.m in Sources */,
 				3098C7E81ACCB4DB00EBB8D1 /* Annotation.m in Sources */,
 				3098C8011ACCB52D00EBB8D1 /* PopOverMapsViewController.m in Sources */,
@@ -547,7 +553,7 @@
 				INFOPLIST_FILE = "Let Me Help/Let Me Help-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "\"Open Now\"";
-				PROVISIONING_PROFILE = "53b5818b-8929-4459-8773-39691559d4b4";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -565,7 +571,7 @@
 				INFOPLIST_FILE = "Let Me Help/Let Me Help-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "\"Open Now\"";
-				PROVISIONING_PROFILE = "53b5818b-8929-4459-8773-39691559d4b4";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};

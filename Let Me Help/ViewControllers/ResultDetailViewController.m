@@ -11,6 +11,7 @@
 #import "Annotation.h"
 #import "PopOverMapsViewController.h"
 #import "LocationObject.h"
+#import "WebViewController.h"
 
 #define BUTTON_INDEX_ZERO 0
 #define BUTTON_INDEX_ONE 1
@@ -23,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *phoneButtonOutlet;
 @property (weak, nonatomic) IBOutlet UIButton *takeMeHereButtonOutlet;
 @property (weak, nonatomic) IBOutlet MKMapView *customMapView;
+@property (weak, nonatomic) IBOutlet UILabel *hoursLabel;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *customActivityIndicator;
 - (IBAction)phoneButtonSelected:(id)sender;
 - (IBAction)takeMeHereButtonClicked:(id)sender;
@@ -31,6 +33,8 @@
 @property (strong, nonatomic) NSString *address;
 @property (strong, nonatomic) NSString *phone;
 @property (strong, nonatomic) NSString *website;
+@property (strong, nonatomic) NSString *hours;
+
 @property double latitude;
 @property double longitude;
 @property (nonatomic, strong) UIPopoverController *popoverVC;
@@ -44,6 +48,7 @@
 
 @implementation ResultDetailViewController
 
+#pragma mark - Life cycle methods
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closePopOver) name:UIApplicationDidEnterBackgroundNotification object:nil];
@@ -70,6 +75,16 @@
             self.address = [result valueForKey:@"vicinity"];
             self.phone = [result valueForKey:@"formatted_phone_number"];
             self.website = [result valueForKey:@"website"];
+            NSDictionary *openHours = [result valueForKey:@"opening_hours"];
+            NSArray *weekHours = [openHours valueForKey:@"weekday_text"];
+            
+            
+            CFAbsoluteTime at = CFAbsoluteTimeGetCurrent();
+            CFTimeZoneRef tz = CFTimeZoneCopySystem();
+            NSInteger weekday = CFAbsoluteTimeGetDayOfWeek(at, tz);
+            
+            self.hours = [weekHours objectAtIndex:weekday-1];
+            
             NSArray *geometry = [result valueForKey:@"geometry"];
             NSArray *location = [geometry valueForKey:@"location"];
             self.latitude =  [[location valueForKey:@"lat"] doubleValue];
@@ -89,20 +104,13 @@
     [super didReceiveMemoryWarning];
 }
 
-- (void)closePopOver
-{
-    if (self.popoverVC && self.popoverVC.isPopoverVisible) {
-        [self.popoverVC dismissPopoverAnimated:NO];
-        self.popoverVC = nil;
-    }
-}
-
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+#pragma mark - Actions
 - (IBAction)phoneButtonSelected:(id)sender
 {
     if (self.phone != nil)
@@ -120,9 +128,7 @@
     self.location.longitude = self.longitude;
     
     BOOL canHandle = [[UIApplication sharedApplication] canOpenURL: [NSURL URLWithString:@"comgooglemaps://"]];
-    self.customActionSheet = [[UIActionSheet alloc] initWithTitle:@"Select" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
-                              APPLE_MAPS,
-                              nil];
+    self.customActionSheet = [[UIActionSheet alloc] initWithTitle:@"Select" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles: APPLE_MAPS, nil];
     NSMutableArray *mapsArray = [[NSMutableArray alloc] init];
     [mapsArray addObject:APPLE_MAPS];
     if (canHandle) {
@@ -152,6 +158,7 @@
     
 }
 
+#pragma mark - Action sheet delegate methods
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (actionSheet == self.customActionSheet) {
@@ -184,12 +191,13 @@
         if (buttonIndex == BUTTON_INDEX_ZERO) {
             [launchOptions setObject:MKLaunchOptionsDirectionsModeDriving forKey:MKLaunchOptionsDirectionsModeKey];
         }else if (buttonIndex == BUTTON_INDEX_ONE) {
-           [launchOptions setObject:MKLaunchOptionsDirectionsModeWalking forKey:MKLaunchOptionsDirectionsModeKey];
+            [launchOptions setObject:MKLaunchOptionsDirectionsModeWalking forKey:MKLaunchOptionsDirectionsModeKey];
         }
         [endingItem openInMapsWithLaunchOptions:launchOptions];
     }
 }
 
+#pragma mark - Helper methods
 - (void)displayInformationOnTheView
 {
     [self.customActivityIndicator stopAnimating];
@@ -197,6 +205,7 @@
     
     self.nameLabel.text = self.name;
     self.addressLabel.text = self.address;
+    self.hoursLabel.text = self.hours;
     [self.phoneButtonOutlet setTitle:self.phone forState:UIControlStateNormal];
     [self.takeMeHereButtonOutlet setTitle:@"Take Me Here" forState:UIControlStateNormal];
     
@@ -224,6 +233,31 @@
     
     [self.customMapView addAnnotations:annotationObjects];
     [self.customMapView setRegion:region animated:YES];
+    
+    if (self.website != nil && ![self.website isKindOfClass:[NSNull class]]) {
+        UIBarButtonItem *websiteButton = [[UIBarButtonItem alloc] initWithTitle:@"Website" style:UIBarButtonItemStylePlain target:self action:@selector(showWebsite)];
+        websiteButton.tintColor = [UIColor blueColor];
+        self.navigationItem.rightBarButtonItem = websiteButton;
+    }
+}
+
+- (void)closePopOver
+{
+    if (self.popoverVC && self.popoverVC.isPopoverVisible) {
+        [self.popoverVC dismissPopoverAnimated:NO];
+        self.popoverVC = nil;
+    }
+}
+
+- (void)showWebsite {
+    NSBundle *lmsBundle = [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"LMHResources" ofType:@"bundle"]];
+    
+    //now load and show updated results popover
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:lmsBundle];
+    
+    WebViewController *webViewController = [storyboard instantiateViewControllerWithIdentifier:@"webViewController"];
+    webViewController.url = self.website;
+    [self presentViewController:webViewController animated:YES completion:nil];
 }
 
 @end

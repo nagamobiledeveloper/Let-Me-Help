@@ -16,6 +16,7 @@
 
 @implementation PopOverMapsViewController
 
+#pragma mark - Life cycle methods
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = MAPS;
