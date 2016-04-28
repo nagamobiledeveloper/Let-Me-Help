@@ -24,6 +24,17 @@
     self.customWebView.delegate = self;
     [self setBackAndForwardButtons];
     
+    UISwipeGestureRecognizer *swipeGestureLeft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeGesture:)];
+    UISwipeGestureRecognizer *swipeGestureRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeGesture:)];
+    
+    // Set swipe direction
+    [swipeGestureLeft setDirection:UISwipeGestureRecognizerDirectionLeft];
+    [swipeGestureRight setDirection:UISwipeGestureRecognizerDirectionRight];
+    
+    // Adding the swipe gesture to customWebView
+    [self.customWebView addGestureRecognizer:swipeGestureLeft];
+    [self.customWebView addGestureRecognizer:swipeGestureRight];
+    
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.url]];
     [self.customWebView loadRequest:request];
 }
@@ -77,4 +88,15 @@
         self.goForwardButton.alpha = 0.3;
     }
 }
+
+- (void)handleSwipeGesture:(UISwipeGestureRecognizer *)swipe {
+    if (swipe.direction == UISwipeGestureRecognizerDirectionLeft) {
+        [self webViewGoForwardPressed:nil];
+    } else if (swipe.direction == UISwipeGestureRecognizerDirectionRight) {
+        [self webViewGoBackPressed:nil];
+    } 
+    
+    [self setBackAndForwardButtons];
+}
+
 @end
