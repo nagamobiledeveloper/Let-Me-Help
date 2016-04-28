@@ -75,13 +75,18 @@
             self.website = [result valueForKey:@"website"];
             NSDictionary *openHours = [result valueForKey:@"opening_hours"];
             NSArray *weekHours = [openHours valueForKey:@"weekday_text"];
+            NSMutableArray *weeks;
+            if (weekHours != NULL && weekHours.count == 7) {
+                weeks = [[NSMutableArray alloc] initWithArray:weekHours];
+                id object = [weeks objectAtIndex:6];
+                [weeks removeObjectAtIndex:6];
+                [weeks insertObject:object atIndex:0];
+            }
             
-            
-            NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-            NSDateComponents *comps = [gregorian components:NSCalendarUnitWeekday fromDate:[NSDate date]];
-            int weekday = ((int)[comps weekday])-1;
-            
-            self.hours = [weekHours objectAtIndex:weekday];
+            NSCalendarUnit dayOfTheWeek = [[NSCalendar currentCalendar] component:NSCalendarUnitWeekday fromDate:[NSDate date]];
+            if (weeks != NULL) {
+                self.hours = [weeks objectAtIndex:dayOfTheWeek-1];
+            }
             
             NSArray *geometry = [result valueForKey:@"geometry"];
             NSArray *location = [geometry valueForKey:@"location"];
