@@ -22,11 +22,6 @@
     self.navigationItem.title = MAPS;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - TableView data source methods
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
