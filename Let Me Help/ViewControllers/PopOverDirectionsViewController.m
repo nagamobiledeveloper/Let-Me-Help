@@ -60,6 +60,8 @@
         NSMutableDictionary *launchOptions = [[NSMutableDictionary alloc] init];
         if ([[self.directionsArray objectAtIndex:indexPath.row] isEqualToString:DRIVING]) {
             [launchOptions setObject:MKLaunchOptionsDirectionsModeDriving forKey:MKLaunchOptionsDirectionsModeKey];
+        } else if ([[self.directionsArray objectAtIndex:indexPath.row] isEqualToString:TRANSIT]) {
+            [launchOptions setObject:MKLaunchOptionsDirectionsModeTransit forKey:MKLaunchOptionsDirectionsModeKey];
         } else if ([[self.directionsArray objectAtIndex:indexPath.row] isEqualToString:WALKING]) {
             [launchOptions setObject:MKLaunchOptionsDirectionsModeWalking forKey:MKLaunchOptionsDirectionsModeKey];
         }

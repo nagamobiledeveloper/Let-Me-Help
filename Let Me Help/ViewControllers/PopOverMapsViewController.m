@@ -55,7 +55,11 @@
         popoverDirectionsViewController.directionsArray = @[DRIVING, TRANSIT, WALKING];
     } else {
         popoverDirectionsViewController.maps = APPLE_MAPS;
-        popoverDirectionsViewController.directionsArray = @[DRIVING, WALKING];
+        if ([[UIDevice currentDevice].systemVersion floatValue] >= 9) {
+            popoverDirectionsViewController.directionsArray = @[DRIVING, TRANSIT, WALKING];
+        } else {
+            popoverDirectionsViewController.directionsArray = @[DRIVING, WALKING];
+        }
     }
     
     [self.navigationController pushViewController:popoverDirectionsViewController animated:YES];
