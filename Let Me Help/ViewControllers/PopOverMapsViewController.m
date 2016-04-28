@@ -20,7 +20,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = MAPS;
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -47,7 +46,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSBundle *lmhBundle = [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"LMHResources" ofType:@"bundle"]];
     
-    //now load and show updated results popover
+    // now load and show updated results popover
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:lmhBundle];
     PopOverDirectionsViewController *popoverDirectionsViewController = [storyboard instantiateViewControllerWithIdentifier:@"popOverDirectionsVC"];
     

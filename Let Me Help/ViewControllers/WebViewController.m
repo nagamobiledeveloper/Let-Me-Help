@@ -28,11 +28,6 @@
     [self.customWebView loadRequest:request];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     if (self.url != nil && ![self.url isKindOfClass:[NSNull class]]) {
         return YES;
@@ -45,7 +40,7 @@
     [self setBackAndForwardButtons];
 }
 
--(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
+-(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     [self setBackAndForwardButtons];
 }
 

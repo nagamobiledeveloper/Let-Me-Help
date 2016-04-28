@@ -25,11 +25,6 @@
     self.location = [LocationObject getInstance];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - TableView data source methods
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
@@ -49,7 +44,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([self.maps isEqualToString:GOOGLE_MAPS]) {
         NSURL *url;
-        
         if ([[self.directionsArray objectAtIndex:indexPath.row] isEqualToString:DRIVING]) {
             url = [NSURL URLWithString:[NSString stringWithFormat:@"comgooglemaps://?daddr=%f,%f&directionsmode=driving", self.location.latitude, self.location.longitude]];
         } else if ([[self.directionsArray objectAtIndex:indexPath.row] isEqualToString:TRANSIT]) {
@@ -57,9 +51,8 @@
         } else if ([[self.directionsArray objectAtIndex:indexPath.row] isEqualToString:WALKING]) {
             url = [NSURL URLWithString:[NSString stringWithFormat:@"comgooglemaps://?daddr=%f,%f&directionsmode=walking", self.location.latitude, self.location.longitude]];
         }
-        
         [[UIApplication sharedApplication] openURL:url];
-    }else if ([self.maps isEqualToString:APPLE_MAPS]){
+    } else if ([self.maps isEqualToString:APPLE_MAPS]){
         CLLocationCoordinate2D endingCoord = CLLocationCoordinate2DMake(self.location.latitude, self.location.longitude);
         MKPlacemark *endLocation = [[MKPlacemark alloc] initWithCoordinate:endingCoord addressDictionary:nil];
         MKMapItem *endingItem = [[MKMapItem alloc] initWithPlacemark:endLocation];
@@ -67,7 +60,7 @@
         NSMutableDictionary *launchOptions = [[NSMutableDictionary alloc] init];
         if ([[self.directionsArray objectAtIndex:indexPath.row] isEqualToString:DRIVING]) {
             [launchOptions setObject:MKLaunchOptionsDirectionsModeDriving forKey:MKLaunchOptionsDirectionsModeKey];
-        }else if ([[self.directionsArray objectAtIndex:indexPath.row] isEqualToString:WALKING]) {
+        } else if ([[self.directionsArray objectAtIndex:indexPath.row] isEqualToString:WALKING]) {
             [launchOptions setObject:MKLaunchOptionsDirectionsModeWalking forKey:MKLaunchOptionsDirectionsModeKey];
         }
         [endingItem openInMapsWithLaunchOptions:launchOptions];

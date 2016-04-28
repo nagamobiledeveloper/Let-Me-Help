@@ -38,8 +38,7 @@
 @implementation ResultsTableViewController
 
 #pragma mark - Life cycle methods
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = self.titleString;
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
@@ -59,8 +58,7 @@
     
     NSURLSession *firstSession = [NSURLSession sharedSession];
     NSURLSessionDataTask *firstTask = [firstSession dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (data!=nil)
-        {
+        if (data!=nil) {
             id jsonData = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
             NSArray *results = [jsonData valueForKey:@"results"];
             
@@ -89,17 +87,10 @@
     [firstTask resume];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
 #pragma mark - Helper methods
--(NSArray *)getDistanceFromCurrentLocation:(NSArray *)locationDetails
-{
+-(NSArray *)getDistanceFromCurrentLocation:(NSArray *)locationDetails {
     NSMutableArray *milesArray = [[NSMutableArray alloc] init];
-    for (NSDictionary *latLong in locationDetails)
-    {
+    for (NSDictionary *latLong in locationDetails) {
         id lat = [latLong valueForKey:@"lat"];
         id lng = [latLong valueForKey:@"lng"];
         
@@ -111,8 +102,7 @@
     return milesArray;
 }
 
--(void)connectToTheServerForSecondTime
-{
+-(void)connectToTheServerForSecondTime {
     NSURL *url;
     if (self.secondarySearchString != nil) {
         url = [NSURL URLWithString:[NSString stringWithFormat:@"%@location=%f,%f&radius=50000&opennow&query=%@&key=%@", PLACE_SEARCH_API, self.location.latitude, self.location.longitude, self.secondarySearchString, SEARCH_KEY]];
@@ -124,8 +114,7 @@
     NSURLSessionDataTask *secondTask = [secondSession dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         id jsonData = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
         NSArray *results = [jsonData valueForKey:@"results"];
-        if ([results count] != 0 && error == nil)
-        {
+        if ([results count] != 0 && error == nil) {
             self.searchType = nil;
             NSArray *geometry = [results valueForKey:@"geometry"];
             NSArray *calculatedMiles = [self getDistanceFromCurrentLocation:[geometry valueForKey:@"location"]];
@@ -146,8 +135,7 @@
                 }
                 
             } else {
-                for (int i=0; i<[[results valueForKey:@"name"] count]; i++)
-                {
+                for (int i=0; i<[[results valueForKey:@"name"] count]; i++) {
                     NSDictionary *dict = @{
                                            @"name":[[results valueForKey:@"name"] objectAtIndex:i],
                                            @"vicinity":[[results valueForKey:@"vicinity"] objectAtIndex:i],
@@ -165,15 +153,12 @@
             NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"doubleValue" ascending:YES];
             NSArray *sortedArray = [mile sortedArrayUsingDescriptors:[NSArray arrayWithObject:sort]];
             NSMutableArray* myArray = [[NSMutableArray alloc] init];
-            for (NSString *numberString in sortedArray)
-            {
+            for (NSString *numberString in sortedArray) {
                 [myArray addObjectsFromArray:[numberString componentsSeparatedByString:@","]];
             }
             NSMutableArray* indexArray = [[NSMutableArray alloc] init];
-            for (int i=0; i<[myArray count]; i++)
-            {
-                if (i%2!=0)
-                {
+            for (int i=0; i<[myArray count]; i++) {
+                if (i%2!=0) {
                     [indexArray addObject:[myArray objectAtIndex:i]];
                 }
             }
@@ -182,8 +167,7 @@
             calculatedMiles = nil;
             
             NSMutableArray *sortedAccordingToMiles = [[NSMutableArray alloc] initWithCapacity:[indexArray count]];
-            for (int i = 0; i<[indexArray count]; i++)
-            {
+            for (int i = 0; i<[indexArray count]; i++) {
                 [sortedAccordingToMiles addObject:[self.secondTimeConnectionArray objectAtIndex:[[indexArray objectAtIndex:i] integerValue]]];
             }
             self.secondTimeConnectionArray = nil;
@@ -201,8 +185,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self setTheDataInTheTableView];
             });
-        }else
-        {
+        } else {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.customActivityIndicator stopAnimating];
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"We are sorry!!"
@@ -218,8 +201,7 @@
     [secondTask resume];
 }
 
--(void)setTheDataInTheTableView
-{
+-(void)setTheDataInTheTableView {
     [self.customActivityIndicator stopAnimating];
     [self.customSelectionTableView reloadData];
 }
@@ -231,18 +213,15 @@
 }
 
 #pragma mark - Table view datasource methods
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.namesArray count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ResultsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ResultsTableViewCell"];
     
     cell.nameLabel.text = [self.namesArray objectAtIndex:indexPath.row];
@@ -264,37 +243,30 @@
     return 74;
 }
 
--(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     // Remove seperator inset
-    if ([cell respondsToSelector:@selector(setSeparatorInset:)])
-    {
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
         [cell setSeparatorInset:UIEdgeInsetsZero];
     }
     // Prevent the cell from inheriting the Table View's margin settings
-    if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)])
-    {
+    if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
         [cell setPreservesSuperviewLayoutMargins:NO];
     } // Explictly set your cell's layout margins
-    if ([cell respondsToSelector:@selector(setLayoutMargins:)])
-    {
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
         [cell setLayoutMargins:UIEdgeInsetsZero];
     }
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 #pragma mark - Segue methods
-- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
-{
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
     Reachability * reach = [Reachability reachabilityWithHostname:GOOGLE_WEBSITE];
-    if ([reach isReachable])
-    {
+    if ([reach isReachable]) {
         return YES;
-    }else
-    {
+    } else {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"We are sorry!!"
                                                         message:@"Please connect to the internet to proceed."
                                                        delegate:nil
@@ -305,10 +277,8 @@
     }
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([[segue identifier] isEqualToString:@"placeDetails"])
-    {
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([[segue identifier] isEqualToString:@"placeDetails"]) {
         ResultsTableViewCell *cell = (ResultsTableViewCell *)sender;
         NSIndexPath *indexPath = [self.customSelectionTableView indexPathForSelectedRow];
         NSString *placeID = [self.placeIDArray objectAtIndex:indexPath.row];
@@ -317,6 +287,4 @@
         detailViewController.titleString = cell.nameLabel.text;
     }
 }
-
-
 @end
