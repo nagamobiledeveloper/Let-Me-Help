@@ -45,10 +45,10 @@
 
 #pragma mark - TableView delegate methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSBundle *lmsBundle = [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"LMHResources" ofType:@"bundle"]];
+    NSBundle *lmhBundle = [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"LMHResources" ofType:@"bundle"]];
     
     //now load and show updated results popover
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:lmsBundle];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:lmhBundle];
     PopOverDirectionsViewController *popoverDirectionsViewController = [storyboard instantiateViewControllerWithIdentifier:@"popOverDirectionsVC"];
     
     if ([[self.mapsArray objectAtIndex:indexPath.row] isEqualToString:GOOGLE_MAPS]) {

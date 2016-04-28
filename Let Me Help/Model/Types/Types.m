@@ -24,7 +24,7 @@ static Types *instance = nil;
 {
     if (self = [super init])
     {
-        self.differentSearchPlacesArray = @[@"Restaurants", @"Food Delivery", @"Food Takeaway", @"Banks", @"Gas Station", @"Cafe", @"Subway Station", @"Train Station", @"Shopping Mall", @"Furniture Store", @"Electronic Store", @"Electrician", @"Car Dealer", @"Hardware Store", @"Hospital", @"Doctor", @"Dentist", @"Physiotherapist", @"Pharmacy", @"Gym", @"Grocery", @"Laundry",  @"Car Rental", @"Car Repair", @"Car Wash", @"Movie Rental", @"Movie Theater", @"Museum", @"Night Club", @"Liquor Store", @"Painter", @"Park", @"Parking", @"Pubs", @"Pet Store", @"Plumber", @"Police", @"Post Office", @"Locksmith", @"Fire Station", @"Florist", @"ATM", @"Bakery", @"Bar", @"Beauty Salon", @"Bicycle Store", @"Book Store", @"Bowling Alley", @"Bus Station", @"Coffee", @"Campground", @"Casino", @"Cemetery", @"Church", @"City Hall", @"Clothing Store", @"Convenience Store", @"Courthouse", @"Department Store", @"Finance", @"Funeral Home", @"Hair Care", @"Hindu Temple", @"Home Goods", @"Insurance Agency", @"Jewelry Store", @"Lawyer", @"Library", @"Government Office", @"Lodging", @"Mosque", @"Moving Company", @"Place of Worship", @"Real Estate Agency", @"Roofing Contractor", @"School", @"Shoe Store", @"Spa", @"Stadium", @"Storage", @"Store", @"Taxi Stand", @"Travel Agency", @"University", @"Veterinary Care", @"Zoo", @"RV park"];
+        self.differentSearchPlacesArray = @[@"Restaurants", @"Food Delivery", @"Food Takeaway", @"Banks", @"Gas Station", @"Cafe", @"Subway Station", @"Train Station", @"Shopping Mall", @"Furniture Store", @"Electronic Store", @"Electrician", @"Car Dealer", @"Hardware Store", @"Hospital", @"Doctor", @"Dentist", @"Physiotherapist", @"Pharmacy", @"Gym", @"Grocery", @"Laundry",  @"Car Rental", @"Car Repair", @"Car Wash", @"Movie Rental", @"Movie Theater", @"Museum", @"Night Club", @"Liquor Store", @"Painter", @"Park", @"Parking", @"Pubs", @"Pet Store", @"Plumber", @"Police", @"Post Office", @"Locksmith", @"Fire Station", @"Florist", @"ATM", @"Bakery", @"Bar", @"Beauty Salon", @"Bicycle Store", @"Book Store", @"Bowling Alley", @"Bus Station", @"Coffee", @"Campground", @"Casino", @"Cemetery", @"Church", @"City Hall", @"Clothing Store", @"Convenience Store", @"Courthouse", @"Department Store", @"Funeral Home", @"Hair Care", @"Hindu Temple", @"Home Goods", @"Insurance Agency", @"Jewelry Store", @"Lawyer", @"Library", @"Government Office", @"Lodging", @"Mosque", @"Moving Company", @"Petrol", @"Real Estate Agency", @"Roofing Contractor", @"School", @"Shoe Store", @"Spa", @"Stadium", @"Storage", @"Store", @"Taxi Stand", @"Travel Agency", @"University", @"Veterinary Care", @"Zoo", @"RV park"];
         
         self.differentSearchPlacesDictionary = @{
                                  @"Restaurants":@"restaurant",
@@ -56,9 +56,6 @@ static Types *instance = nil;
                                  @"Courthouse":@"courthouse",
                                  @"Department Store":@"department_store",
                                  
-                                 @"Finance":@"finance",
-                                 
-                                 
                                  @"Funeral Home":@"funeral_home",
                                  @"Hair Care":@"hair_care",
                                  @"Hindu Temple":@"hindu_temple",
@@ -71,7 +68,7 @@ static Types *instance = nil;
                                  @"Lodging":@"lodging",
                                  @"Mosque":@"mosque",
                                  @"Moving Company":@"moving_company",
-                                 @"Place of Worship":@"place_of_worship",
+                                 @"Petrol":@"gas_station",
                                  @"Real Estate Agency":@"real_estate_agency",
                                  @"Roofing Contractor":@"roofing_contractor",
                                  @"School":@"school",
@@ -127,10 +124,6 @@ static Types *instance = nil;
                                  @"Fire Station":@"fire_station",
                                  @"Florist":@"florist"
                                  };
-        
-//        [self.differentSearchPlacesArray sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-//        [self.differentSearchPlacesArray sortedArrayUsingSelector:@selector(descriptionWithLocale:)];
-//        localizedCaseInsensitiveCompare:
         
     }
     return self;

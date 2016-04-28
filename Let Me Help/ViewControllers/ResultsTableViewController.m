@@ -42,6 +42,8 @@
 {
     [super viewDidLoad];
     self.navigationItem.title = self.titleString;
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+    
     self.customSelectionTableView.delegate = self;
     [self.customActivityIndicator startAnimating];
     self.types = [Types getInstance];
@@ -53,7 +55,7 @@
         return;
     }
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@location=%f,%f&types=%@&rankby=distance&opennow&sensor=false&key=%@", GOOGLE_NEARBY_SEARCH, self.location.latitude, self.location.longitude, self.searchType, GOOGLE_SEARCH_KEY]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@location=%f,%f&type=%@&rankby=distance&opennow&key=%@", NEARBY_SEARCH_API, self.location.latitude, self.location.longitude, self.searchType, SEARCH_KEY]];
     
     NSURLSession *firstSession = [NSURLSession sharedSession];
     NSURLSessionDataTask *firstTask = [firstSession dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -113,9 +115,9 @@
 {
     NSURL *url;
     if (self.secondarySearchString != nil) {
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/textsearch/json?location=%f,%f&radius=50000&opennow&query=%@&key=%@", self.location.latitude, self.location.longitude, self.secondarySearchString, GOOGLE_SEARCH_KEY]];
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@location=%f,%f&radius=50000&opennow&query=%@&key=%@", PLACE_SEARCH_API, self.location.latitude, self.location.longitude, self.secondarySearchString, SEARCH_KEY]];
     } else {
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@location=%f,%f&radius=50000&types=%@&opennow&sensor=false&key=%@", GOOGLE_NEARBY_SEARCH, self.location.latitude, self.location.longitude, self.searchType, GOOGLE_SEARCH_KEY]];
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@location=%f,%f&radius=50000&type=%@&opennow&key=%@", NEARBY_SEARCH_API, self.location.latitude, self.location.longitude, self.searchType, SEARCH_KEY]];
     }
     
     NSURLSession *secondSession = [NSURLSession sharedSession];
@@ -278,6 +280,10 @@
     {
         [cell setLayoutMargins:UIEdgeInsetsZero];
     }
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 #pragma mark - Segue methods

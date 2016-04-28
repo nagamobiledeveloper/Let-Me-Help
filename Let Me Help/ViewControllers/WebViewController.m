@@ -12,8 +12,8 @@
 
 @property (weak, nonatomic) IBOutlet UIWebView *customWebView;
 - (IBAction)doneButtonPressed:(id)sender;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *customActivityIndicator;
-
+@property (strong, nonatomic) IBOutlet UIButton *goBackButton;
+@property (strong, nonatomic) IBOutlet UIButton *goForwardButton;
 @end
 
 @implementation WebViewController
@@ -22,6 +22,7 @@
     [super viewDidLoad];
     
     self.customWebView.delegate = self;
+    [self setBackAndForwardButtons];
     
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.url]];
     [self.customWebView loadRequest:request];
@@ -40,23 +41,45 @@
     return NO;
 }
 
-- (void)webViewDidStartLoad:(UIWebView *)webView {
-    [self.customActivityIndicator startAnimating];
-}
-
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
-    [self.customActivityIndicator stopAnimating];
-    
+    [self setBackAndForwardButtons];
 }
 
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    [self.customActivityIndicator stopAnimating];
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"We are sorry!!" message:@"There is a error loading website. Please try again later" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-    [alert show];
+-(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
+    [self setBackAndForwardButtons];
 }
 
 - (IBAction)doneButtonPressed:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (IBAction)webViewGoBackPressed:(id)sender {
+    if ([self.customWebView canGoBack]) {
+        [self.customWebView goBack];
+    }
+}
+
+- (IBAction)webViewGoForwardPressed:(id)sender {
+    if ([self.customWebView canGoForward]) {
+        [self.customWebView goForward];
+    }
+}
+
+- (void)setBackAndForwardButtons {
+    if ([self.customWebView canGoBack]) {
+        [self.goBackButton setEnabled:true];
+        self.goBackButton.alpha = 1.0;
+    } else{
+        [self.goBackButton setEnabled:false];
+        self.goBackButton.alpha = 0.3;
+    }
+    
+    if ([self.customWebView canGoForward]) {
+        [self.goForwardButton setEnabled:true];
+        self.goForwardButton.alpha = 1.0;
+    } else {
+        [self.goForwardButton setEnabled:false];
+        self.goForwardButton.alpha = 0.3;
+    }
+}
 @end

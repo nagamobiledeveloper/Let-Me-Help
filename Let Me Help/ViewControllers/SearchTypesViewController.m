@@ -34,6 +34,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+    
     self.customSearchBar.showsCancelButton = NO;
     
     self.location = [LocationObject getInstance];
@@ -92,8 +94,7 @@
 //    Hyderabad
 //    17.439186,78.4446354
     Reachability * reach = [Reachability reachabilityWithHostname:GOOGLE_WEBSITE];
-    if (![reach isReachable])
-    {
+    if (![reach isReachable]) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"We are sorry!!"
                                                     message:@"Please connect to internet to improve user location accuracy."
                                                    delegate:self

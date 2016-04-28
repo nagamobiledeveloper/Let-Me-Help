@@ -57,10 +57,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationItem.title = self.titleString;
+    self.navigationItem.title = self.titleString;;
     [self.customActivityIndicator startAnimating];
     self.location = [LocationObject getInstance];
-    NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"%@placeid=%@&key=%@", GOOGLE_SEARCH_DETAILS, self.placeID, GOOGLE_SEARCH_KEY]];
+    NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"%@placeid=%@&key=%@", PLACE_DETAILS_API, self.placeID, SEARCH_KEY]];
     
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
@@ -79,11 +79,11 @@
             NSArray *weekHours = [openHours valueForKey:@"weekday_text"];
             
             
-            CFAbsoluteTime at = CFAbsoluteTimeGetCurrent();
-            CFTimeZoneRef tz = CFTimeZoneCopySystem();
-            NSInteger weekday = CFAbsoluteTimeGetDayOfWeek(at, tz);
+            NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+            NSDateComponents *comps = [gregorian components:NSCalendarUnitWeekday fromDate:[NSDate date]];
+            int weekday = ((int)[comps weekday])-1;
             
-            self.hours = [weekHours objectAtIndex:weekday-1];
+            self.hours = [weekHours objectAtIndex:weekday];
             
             NSArray *geometry = [result valueForKey:@"geometry"];
             NSArray *location = [geometry valueForKey:@"location"];
@@ -235,7 +235,14 @@
     [self.customMapView setRegion:region animated:YES];
     
     if (self.website != nil && ![self.website isKindOfClass:[NSNull class]]) {
-        UIBarButtonItem *websiteButton = [[UIBarButtonItem alloc] initWithTitle:@"Website" style:UIBarButtonItemStylePlain target:self action:@selector(showWebsite)];
+        NSBundle *lmhBundle = [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"LMHResources" ofType:@"bundle"]];
+        NSString *path = [lmhBundle pathForResource:@"web" ofType:@"png"];
+        UIImage* webImage = [UIImage imageWithContentsOfFile:path];
+        
+        UIBarButtonItem *websiteButton = [[UIBarButtonItem alloc] initWithImage:webImage style:UIBarButtonItemStylePlain target:self action:@selector(showWebsite)];
+        
+//        [[UIBarButtonItem alloc] initWithTitle:@"Website" style:UIBarButtonItemStylePlain target:self action:@selector(showWebsite)];
+        
         websiteButton.tintColor = [UIColor blueColor];
         self.navigationItem.rightBarButtonItem = websiteButton;
     }
