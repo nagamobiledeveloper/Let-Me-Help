@@ -12,8 +12,9 @@
 
 @property (weak, nonatomic) IBOutlet UIWebView *customWebView;
 - (IBAction)doneButtonPressed:(id)sender;
-@property (strong, nonatomic) IBOutlet UIButton *goBackButton;
-@property (strong, nonatomic) IBOutlet UIButton *goForwardButton;
+@property (weak, nonatomic) IBOutlet UIButton *goBackButton;
+@property (weak, nonatomic) IBOutlet UIButton *goForwardButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *domainLabel;
 @end
 
 @implementation WebViewController
@@ -35,6 +36,11 @@
     [self.customWebView addGestureRecognizer:swipeGestureLeft];
     [self.customWebView addGestureRecognizer:swipeGestureRight];
     
+    [self.domainLabel setTitleTextAttributes:@{
+                                         NSFontAttributeName: [UIFont fontWithName:@"Helvetica-Bold" size:20.0],
+                                         NSForegroundColorAttributeName: [UIColor blackColor]
+                                         } forState:UIControlStateNormal];
+    
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.url]];
     [self.customWebView loadRequest:request];
 }
@@ -43,12 +49,20 @@
     if (self.url != nil && ![self.url isKindOfClass:[NSNull class]]) {
         return YES;
     }
-    
     return NO;
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     [self setBackAndForwardButtons];
+    NSURL *url = webView.request.URL;
+    if (url != nil) {
+        NSString *domain = [[NSMutableString alloc] initWithString:[url host]];
+        if (domain != nil || ![domain  isEqual: @""]) {
+            domain = [domain stringByReplacingOccurrencesOfString:@"www."
+                                                 withString:@""];
+            self.domainLabel.title = domain;
+        }
+    }
 }
 
 -(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
