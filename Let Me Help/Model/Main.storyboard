@@ -331,7 +331,6 @@
                             </webView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SOR-os-Upo">
                                 <rect key="frame" x="0.0" y="20" width="600" height="44"/>
-                                <color key="backgroundColor" red="0.055195456660000003" green="0.50548070789999999" blue="0.090875914919999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Ie2-Mu-6ZT"/>
                                     <barButtonItem title="Done" id="sQp-fQ-cHb">
@@ -341,7 +340,6 @@
                                         </connections>
                                     </barButtonItem>
                                 </items>
-                                <color key="barTintColor" red="0.055195456660000003" green="0.50548070789999999" blue="0.090875914919999995" alpha="1" colorSpace="calibratedRGB"/>
                             </toolbar>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="db5-26-PlG">
                                 <rect key="frame" x="0.0" y="556" width="600" height="44"/>

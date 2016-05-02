@@ -14,5 +14,5 @@
     #define NEARBY_SEARCH_API @"https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
     #define PLACE_SEARCH_API @"https://maps.googleapis.com/maps/api/place/textsearch/json?"
     #define PLACE_DETAILS_API @"https://maps.googleapis.com/maps/api/place/details/json?"
-    #define SEARCH_KEY @"AIzaSyDcls9CVYQinNk7A80EzVPyaKnDdIUvvuM"
+    #define SEARCH_KEY @"AIzaSyBqJm0s-cLWvjdBsdp1VWwFX2rOGIqgvDs"
 #endif

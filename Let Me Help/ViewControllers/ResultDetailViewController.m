@@ -75,13 +75,18 @@
             self.website = [result valueForKey:@"website"];
             NSDictionary *openHours = [result valueForKey:@"opening_hours"];
             NSArray *weekHours = [openHours valueForKey:@"weekday_text"];
+            NSMutableArray *weeks;
+            if (weekHours != NULL && weekHours.count == 7) {
+                weeks = [[NSMutableArray alloc] initWithArray:weekHours];
+                id object = [weeks objectAtIndex:6];
+                [weeks removeObjectAtIndex:6];
+                [weeks insertObject:object atIndex:0];
+            }
             
-            
-            NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-            NSDateComponents *comps = [gregorian components:NSCalendarUnitWeekday fromDate:[NSDate date]];
-            int weekday = ((int)[comps weekday])-1;
-            
-            self.hours = [weekHours objectAtIndex:weekday];
+            NSCalendarUnit dayOfTheWeek = [[NSCalendar currentCalendar] component:NSCalendarUnitWeekday fromDate:[NSDate date]];
+            if (weeks != NULL) {
+                self.hours = [weeks objectAtIndex:dayOfTheWeek-1];
+            }
             
             NSArray *geometry = [result valueForKey:@"geometry"];
             NSArray *location = [geometry valueForKey:@"location"];
@@ -157,11 +162,11 @@
             self.googleMapsActionSheet.tag = 1;
             [self.googleMapsActionSheet showInView:[UIApplication sharedApplication].keyWindow];
         } else if(buttonIndex == BUTTON_INDEX_ZERO) {
-            self.appleMapsActionSheet = [[UIActionSheet alloc] initWithTitle:@"Select" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:DRIVING, WALKING,nil];
+            self.appleMapsActionSheet = [[UIActionSheet alloc] initWithTitle:@"Select" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:DRIVING, TRANSIT, WALKING,nil];
             self.appleMapsActionSheet.tag = 1;
             [self.appleMapsActionSheet showInView:[UIApplication sharedApplication].keyWindow];
         }
-    } else if (actionSheet == self.googleMapsActionSheet) {
+    } else if (actionSheet == self.googleMapsActionSheet && buttonIndex < 3) {
         NSURL *url;
         if (buttonIndex == BUTTON_INDEX_ZERO) {
             url = [NSURL URLWithString:[NSString stringWithFormat:@"comgooglemaps://?daddr=%f,%f&directionsmode=driving", self.latitude, self.longitude]];
@@ -170,8 +175,10 @@
         } else if (buttonIndex == BUTTON_INDEX_TWO) {
             url = [NSURL URLWithString:[NSString stringWithFormat:@"comgooglemaps://?daddr=%f,%f&directionsmode=walking", self.latitude, self.longitude]];
         }
-        [[UIApplication sharedApplication] openURL:url];
-    } else if (actionSheet == self.appleMapsActionSheet){
+        if (url != nil) {
+            [[UIApplication sharedApplication] openURL:url];
+        }
+    } else if (actionSheet == self.appleMapsActionSheet && buttonIndex < 3){
         CLLocationCoordinate2D endingCoord = CLLocationCoordinate2DMake(self.latitude, self.longitude);
         MKPlacemark *endLocation = [[MKPlacemark alloc] initWithCoordinate:endingCoord addressDictionary:nil];
         MKMapItem *endingItem = [[MKMapItem alloc] initWithPlacemark:endLocation];
@@ -180,9 +187,13 @@
         if (buttonIndex == BUTTON_INDEX_ZERO) {
             [launchOptions setObject:MKLaunchOptionsDirectionsModeDriving forKey:MKLaunchOptionsDirectionsModeKey];
         } else if (buttonIndex == BUTTON_INDEX_ONE) {
+            [launchOptions setObject:MKLaunchOptionsDirectionsModeTransit forKey:MKLaunchOptionsDirectionsModeKey];
+        } else if (buttonIndex == BUTTON_INDEX_TWO) {
             [launchOptions setObject:MKLaunchOptionsDirectionsModeWalking forKey:MKLaunchOptionsDirectionsModeKey];
         }
-        [endingItem openInMapsWithLaunchOptions:launchOptions];
+        if (launchOptions != nil) {
+            [endingItem openInMapsWithLaunchOptions:launchOptions];
+        }
     }
 }
 
