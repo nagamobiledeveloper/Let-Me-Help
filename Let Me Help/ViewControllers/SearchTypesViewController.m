@@ -52,7 +52,8 @@
     [self.customTableView setAllowsSelection:YES];
     self.customTableView.delegate = self;
     self.placesArray = [[NSArray alloc] init];
-    self.placesArray = [[self.types differentSearchPlacesArray] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+    self.placesArray = [self.types differentSearchPlacesArray];
+//    [[self.types differentSearchPlacesArray] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCurrentLocation) name:UIApplicationWillEnterForegroundNotification object:nil];
 }
@@ -146,8 +147,9 @@
 #pragma mark - Segue methods
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
 {
-//    [self.location setLatitude:30.3077609];
-//    [self.location setLongitude:-97.7534014];
+    [self.location setLatitude:51.528308];
+    [self.location setLongitude:-0.3817765];
+    
     Reachability * reach = [Reachability reachabilityWithHostname:GOOGLE_WEBSITE];
     if ([reach isReachable] && self.location.latitude != 0.0 && self.location.longitude != 0.0) {
         return YES;
