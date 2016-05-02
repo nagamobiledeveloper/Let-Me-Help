@@ -54,15 +54,7 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     [self setBackAndForwardButtons];
-    NSURL *url = webView.request.URL;
-    if (url != nil) {
-        NSString *domain = [[NSMutableString alloc] initWithString:[url host]];
-        if (domain != nil || ![domain  isEqual: @""]) {
-            domain = [domain stringByReplacingOccurrencesOfString:@"www."
-                                                 withString:@""];
-            self.domainLabel.title = domain;
-        }
-    }
+    [self updateDomain:webView.request.URL];
 }
 
 -(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
@@ -113,4 +105,15 @@
     [self setBackAndForwardButtons];
 }
 
+- (void)updateDomain:(NSURL *)url {
+    if (![url isKindOfClass:[NSNull class]] && url != nil) {
+        NSString *domain = [[NSMutableString alloc] initWithString:[url host]];
+        if (domain != nil || ![domain  isEqual: @""]) {
+            domain = [domain stringByReplacingOccurrencesOfString:@"www."                                             withString:@""];
+            if (![self.domainLabel.title isEqualToString:domain]) {
+                self.domainLabel.title = domain;
+            }
+        }
+    }
+}
 @end
