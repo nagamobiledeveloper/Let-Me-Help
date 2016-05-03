@@ -22,6 +22,7 @@
 		3098C8061ACCB56200EBB8D1 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 3098C8051ACCB56200EBB8D1 /* Reachability.m */; };
 		3098C8091ACCB57C00EBB8D1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3098C8081ACCB57C00EBB8D1 /* AppDelegate.m */; };
 		3098C8911ACCD7B100EBB8D1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3098C8901ACCD7B100EBB8D1 /* Images.xcassets */; };
+		30C5894D1CD8531000C0E643 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3098C8901ACCD7B100EBB8D1 /* Images.xcassets */; };
 		4465C8D21946605B00DA5670 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4465C8D11946605B00DA5670 /* CoreData.framework */; };
 		4466FE611935637200EC7504 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4466FE601935637200EC7504 /* Foundation.framework */; };
 		4466FE631935637200EC7504 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4466FE621935637200EC7504 /* CoreGraphics.framework */; };
@@ -381,6 +382,7 @@
 			files = (
 				661E256A1CD6EAE300D75223 /* web.png in Resources */,
 				661E25681CD6E13F00D75223 /* delete.png in Resources */,
+				30C5894D1CD8531000C0E643 /* Images.xcassets in Resources */,
 				6630DDCE1CD1AFD800241F3C /* LaunchStoryboard.storyboard in Resources */,
 				3093A5981ACE0BB7003930C7 /* Main.storyboard in Resources */,
 				661E25651CD6E03600D75223 /* backward.png in Resources */,
