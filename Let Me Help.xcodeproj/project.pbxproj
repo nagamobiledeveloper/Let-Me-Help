@@ -83,7 +83,7 @@
 		3098C8181ACCB5D200EBB8D1 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Model/Main.storyboard; sourceTree = "<group>"; };
 		3098C8901ACCD7B100EBB8D1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		4465C8D11946605B00DA5670 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		4466FE5D1935637200EC7504 /* "Open Now".app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "\"Open Now\".app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4466FE5D1935637200EC7504 /* Whatz Open.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Whatz Open.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4466FE601935637200EC7504 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4466FE621935637200EC7504 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		4466FE641935637200EC7504 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -229,7 +229,7 @@
 		4466FE5E1935637200EC7504 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4466FE5D1935637200EC7504 /* "Open Now".app */,
+				4466FE5D1935637200EC7504 /* Whatz Open.app */,
 				3093A5911ACE0BA1003930C7 /* LMHResources.bundle */,
 			);
 			name = Products;
@@ -331,7 +331,7 @@
 			);
 			name = "Let Me Help";
 			productName = "Let Me Help";
-			productReference = 4466FE5D1935637200EC7504 /* "Open Now".app */;
+			productReference = 4466FE5D1935637200EC7504 /* Whatz Open.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -585,7 +585,7 @@
 				INFOPLIST_FILE = "Let Me Help/Let Me Help-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.naga.Let-Me-Help";
-				PRODUCT_NAME = "\"Open Now\"";
+				PRODUCT_NAME = "Whatz Open";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -603,7 +603,7 @@
 				INFOPLIST_FILE = "Let Me Help/Let Me Help-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.naga.Let-Me-Help";
-				PRODUCT_NAME = "\"Open Now\"";
+				PRODUCT_NAME = "Whatz Open";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
