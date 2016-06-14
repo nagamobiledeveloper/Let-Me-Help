@@ -57,6 +57,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCurrentLocation) name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 
+-(void)dealloc {
+    NSLog(@"%@ %@", self, NSStringFromSelector(_cmd));
+}
+
 #pragma mark - Helpers
 - (void)updateCurrentLocation {
     [self.lManager startUpdatingLocation];

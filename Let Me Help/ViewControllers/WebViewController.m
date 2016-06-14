@@ -45,6 +45,10 @@
     [self.customWebView loadRequest:request];
 }
 
+-(void)dealloc {
+    NSLog(@"%@ %@", self, NSStringFromSelector(_cmd));
+}
+
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     if (self.url != nil && ![self.url isKindOfClass:[NSNull class]]) {
         return YES;

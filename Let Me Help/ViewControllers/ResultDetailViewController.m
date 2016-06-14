@@ -102,10 +102,13 @@
     [dataTask resume];
 }
 
-
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+-(void)dealloc {
+    NSLog(@"%@ %@", self, NSStringFromSelector(_cmd));
 }
 
 #pragma mark - Actions

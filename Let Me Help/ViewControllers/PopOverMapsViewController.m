@@ -22,6 +22,10 @@
     self.navigationItem.title = MAPS;
 }
 
+-(void)dealloc {
+    NSLog(@"%@ %@", self, NSStringFromSelector(_cmd));
+}
+
 #pragma mark - TableView data source methods
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;

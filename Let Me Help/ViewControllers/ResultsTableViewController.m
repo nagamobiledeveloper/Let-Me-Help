@@ -87,6 +87,10 @@
     [firstTask resume];
 }
 
+-(void)dealloc {
+    NSLog(@"%@ %@", self, NSStringFromSelector(_cmd));
+}
+
 #pragma mark - Helper methods
 -(NSArray *)getDistanceFromCurrentLocation:(NSArray *)locationDetails {
     NSMutableArray *milesArray = [[NSMutableArray alloc] init];
