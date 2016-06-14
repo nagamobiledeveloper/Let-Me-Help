@@ -243,9 +243,4 @@
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
     self.customSearchBar.showsCancelButton = NO;
 }
-
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 @end
