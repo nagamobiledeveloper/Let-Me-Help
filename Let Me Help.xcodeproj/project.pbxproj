@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3048B8FE1D10A7DF0072A071 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3048B8FD1D10A7DF0072A071 /* SafariServices.framework */; };
 		3093A5981ACE0BB7003930C7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3098C8181ACCB5D200EBB8D1 /* Main.storyboard */; };
 		3093A5A31ACE0C02003930C7 /* LMHResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3093A5911ACE0BA1003930C7 /* LMHResources.bundle */; };
 		3098C7E51ACCB4CE00EBB8D1 /* LocationObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 3098C7E41ACCB4CE00EBB8D1 /* LocationObject.m */; };
@@ -55,7 +54,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3048B8FD1D10A7DF0072A071 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		3093A5911ACE0BA1003930C7 /* LMHResources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LMHResources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		3093A5941ACE0BA1003930C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3098C7E31ACCB4CE00EBB8D1 /* LocationObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationObject.h; path = Model/Location/LocationObject.h; sourceTree = "<group>"; };
@@ -118,7 +116,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3048B8FE1D10A7DF0072A071 /* SafariServices.framework in Frameworks */,
 				44F8FDEF1981BAB30003AC5D /* SystemConfiguration.framework in Frameworks */,
 				44F8FDED1981BAAA0003AC5D /* Security.framework in Frameworks */,
 				447CAA2B197832910022842C /* MapKit.framework in Frameworks */,
@@ -241,7 +238,6 @@
 		4466FE5F1935637200EC7504 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				3048B8FD1D10A7DF0072A071 /* SafariServices.framework */,
 				44F8FDEE1981BAB30003AC5D /* SystemConfiguration.framework */,
 				44F8FDEC1981BAAA0003AC5D /* Security.framework */,
 				447CAA2A197832910022842C /* MapKit.framework */,

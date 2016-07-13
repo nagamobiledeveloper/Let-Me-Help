@@ -12,7 +12,6 @@
 #import "PopOverMapsViewController.h"
 #import "LocationObject.h"
 #import "WebViewController.h"
-#import <SafariServices/SafariServices.h>
 
 #define BUTTON_INDEX_ZERO 0
 #define BUTTON_INDEX_ONE 1
@@ -257,12 +256,14 @@
 }
 
 - (void)showWebsite {
-    if (self.website) {
-        NSURL *url = [NSURL URLWithString:self.website];
-        SFSafariViewController *safariVC = [[SFSafariViewController alloc] initWithURL:url];
-        safariVC.modalPresentationStyle = UIModalPresentationFormSheet;
-        [self presentViewController:safariVC animated:YES completion:nil];
-    }
+    NSBundle *lmsBundle = [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"LMHResources" ofType:@"bundle"]];
+    
+    // now load and show updated results popover
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:lmsBundle];
+    
+    WebViewController *webViewController = [storyboard instantiateViewControllerWithIdentifier:@"webViewController"];
+    webViewController.url = self.website;
+    [self presentViewController:webViewController animated:YES completion:nil];
 }
 
 @end
