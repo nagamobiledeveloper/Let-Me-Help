@@ -89,12 +89,15 @@
 //    17.439186,78.4446354
     Reachability * reach = [Reachability reachabilityWithHostname:GOOGLE_WEBSITE];
     if (![reach isReachable]) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"We are sorry!!"
-                                                    message:@"Please connect to internet to improve user location accuracy."
-                                                   delegate:self
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
-        [alert show];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:@"Please connect to internet to improve user location accuracy." preferredStyle:UIAlertControllerStyleAlert];
+        
+        // add actions
+        UIAlertAction *actionOK = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:actionOK];
+        
+        // show alert
+        [self presentViewController:alert animated:YES completion:nil];
+        
         [self.lManager stopUpdatingLocation];
     }
 }
@@ -156,19 +159,23 @@
     if ([reach isReachable] && self.location.latitude != 0.0 && self.location.longitude != 0.0) {
         return YES;
     }else if(![reach isReachable]) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"We are sorry!!"
-                                                        message:@"Please connect to the internet to proceed."
-                                                       delegate:self
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"No Network" message:@"Please connect to the internet to proceed." preferredStyle:UIAlertControllerStyleAlert];
+        
+        // add actions
+        UIAlertAction *actionOK = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:actionOK];
+        
+        // show alert
+        [self presentViewController:alert animated:YES completion:nil];
     }else if(self.location.latitude == 0.0 || self.location.longitude == 0.0) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"We are sorry!!"
-                                                        message:@"We are not able to get your current location. Please make sure your Location Services are turned ON."
-                                                       delegate:self
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:@"We are not able to get your current location. Please make sure your Location Services are turned ON." preferredStyle:UIAlertControllerStyleAlert];
+        
+        // add actions
+        UIAlertAction *actionOK = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:actionOK];
+        
+        // show alert
+        [self presentViewController:alert animated:YES completion:nil];
     }
     return NO;
 }

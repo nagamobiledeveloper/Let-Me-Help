@@ -17,7 +17,7 @@
 
 #define MINIMUM_COUNT 7
 
-@interface ResultsTableViewController ()<NSURLConnectionDelegate, CLLocationManagerDelegate, UIAlertViewDelegate>
+@interface ResultsTableViewController ()<NSURLConnectionDelegate, CLLocationManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *customSelectionTableView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *customActivityIndicator;
@@ -192,12 +192,18 @@
         } else {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.customActivityIndicator stopAnimating];
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"We are sorry!!"
-                                                                message:[NSString stringWithFormat:@"We didn't find any %@ open at this time near your current location. Please try again later.", self.titleString]
-                                                               delegate:self
-                                                      cancelButtonTitle:@"OK"
-                                                      otherButtonTitles:nil];
-                [alert show];
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"We are sorry!!" message:[NSString stringWithFormat:@"We didn't find any %@ open at this time near your current location. Please try again later.", self.titleString] preferredStyle:UIAlertControllerStyleAlert];
+                
+                __weak typeof(self)weakSelf = self;
+                // add actions
+                UIAlertAction *actionOK = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    NSArray *viewControllers = weakSelf.navigationController.viewControllers;
+                    [weakSelf.navigationController popToViewController:[viewControllers firstObject] animated:YES];
+                }];
+                [alert addAction:actionOK];
+                
+                // show alert
+                [self presentViewController:alert animated:YES completion:nil];
             });
         }
     }];
@@ -208,12 +214,6 @@
 -(void)setTheDataInTheTableView {
     [self.customActivityIndicator stopAnimating];
     [self.customSelectionTableView reloadData];
-}
-
-#pragma mark - AlertView delegate methods
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    NSArray *viewControllers = self.navigationController.viewControllers;
-    [self.navigationController popToViewController:[viewControllers firstObject] animated:YES];
 }
 
 #pragma mark - Table view datasource methods
@@ -271,12 +271,15 @@
     if ([reach isReachable]) {
         return YES;
     } else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"We are sorry!!"
-                                                        message:@"Please connect to the internet to proceed."
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"No Network" message:@"Please connect to the internet to proceed." preferredStyle:UIAlertControllerStyleAlert];
+        
+        // add actions
+        UIAlertAction *actionOK = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:actionOK];
+        
+        // show alert
+        [self presentViewController:alert animated:YES completion:nil];
+        
         return NO;
     }
 }
