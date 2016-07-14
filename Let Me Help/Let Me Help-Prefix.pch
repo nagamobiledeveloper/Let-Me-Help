@@ -6,16 +6,13 @@
 
 #import <Availability.h>
 
-#ifndef __IPHONE_5_0
-#warning "This project uses features only available in iOS SDK 5.0 and later."
-#endif
-
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
     #import<CoreData/CoreData.h>
     #define GOOGLE_WEBSITE @"www.google.com"
-    #define GOOGLE_NEARBY_SEARCH @"https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
-    #define GOOGLE_SEARCH_DETAILS @"https://maps.googleapis.com/maps/api/place/details/json?"
-    #define GOOGLE_SEARCH_KEY @"AIzaSyDcls9CVYQinNk7A80EzVPyaKnDdIUvvuM"
+    #define NEARBY_SEARCH_API @"https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
+    #define PLACE_SEARCH_API @"https://maps.googleapis.com/maps/api/place/textsearch/json?"
+    #define PLACE_DETAILS_API @"https://maps.googleapis.com/maps/api/place/details/json?"
+    #define SEARCH_KEY @"AIzaSyBqJm0s-cLWvjdBsdp1VWwFX2rOGIqgvDs"
 #endif

@@ -17,7 +17,7 @@
 
 #define MINIMUM_COUNT 7
 
-@interface ResultsTableViewController ()<NSURLConnectionDelegate, CLLocationManagerDelegate, UIAlertViewDelegate>
+@interface ResultsTableViewController ()<NSURLConnectionDelegate, CLLocationManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *customSelectionTableView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *customActivityIndicator;
@@ -38,10 +38,11 @@
 @implementation ResultsTableViewController
 
 #pragma mark - Life cycle methods
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = self.titleString;
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+    
     self.customSelectionTableView.delegate = self;
     [self.customActivityIndicator startAnimating];
     self.types = [Types getInstance];
@@ -53,12 +54,11 @@
         return;
     }
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@location=%f,%f&types=%@&rankby=distance&opennow&sensor=false&key=%@", GOOGLE_NEARBY_SEARCH, self.location.latitude, self.location.longitude, self.searchType, GOOGLE_SEARCH_KEY]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@location=%f,%f&type=%@&rankby=distance&opennow&key=%@", NEARBY_SEARCH_API, self.location.latitude, self.location.longitude, self.searchType, SEARCH_KEY]];
     
     NSURLSession *firstSession = [NSURLSession sharedSession];
     NSURLSessionDataTask *firstTask = [firstSession dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (data!=nil)
-        {
+        if (data!=nil) {
             id jsonData = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
             NSArray *results = [jsonData valueForKey:@"results"];
             
@@ -87,17 +87,14 @@
     [firstTask resume];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
+-(void)dealloc {
+    NSLog(@"%@ %@", self, NSStringFromSelector(_cmd));
 }
 
 #pragma mark - Helper methods
--(NSArray *)getDistanceFromCurrentLocation:(NSArray *)locationDetails
-{
+-(NSArray *)getDistanceFromCurrentLocation:(NSArray *)locationDetails {
     NSMutableArray *milesArray = [[NSMutableArray alloc] init];
-    for (NSDictionary *latLong in locationDetails)
-    {
+    for (NSDictionary *latLong in locationDetails) {
         id lat = [latLong valueForKey:@"lat"];
         id lng = [latLong valueForKey:@"lng"];
         
@@ -109,21 +106,19 @@
     return milesArray;
 }
 
--(void)connectToTheServerForSecondTime
-{
+-(void)connectToTheServerForSecondTime {
     NSURL *url;
     if (self.secondarySearchString != nil) {
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/textsearch/json?location=%f,%f&radius=50000&opennow&query=%@&key=%@", self.location.latitude, self.location.longitude, self.secondarySearchString, GOOGLE_SEARCH_KEY]];
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@location=%f,%f&radius=50000&opennow&query=%@&key=%@", PLACE_SEARCH_API, self.location.latitude, self.location.longitude, self.secondarySearchString, SEARCH_KEY]];
     } else {
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@location=%f,%f&radius=50000&types=%@&opennow&sensor=false&key=%@", GOOGLE_NEARBY_SEARCH, self.location.latitude, self.location.longitude, self.searchType, GOOGLE_SEARCH_KEY]];
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@location=%f,%f&radius=50000&type=%@&opennow&key=%@", NEARBY_SEARCH_API, self.location.latitude, self.location.longitude, self.searchType, SEARCH_KEY]];
     }
     
     NSURLSession *secondSession = [NSURLSession sharedSession];
     NSURLSessionDataTask *secondTask = [secondSession dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         id jsonData = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
         NSArray *results = [jsonData valueForKey:@"results"];
-        if ([results count] != 0 && error == nil)
-        {
+        if ([results count] != 0 && error == nil) {
             self.searchType = nil;
             NSArray *geometry = [results valueForKey:@"geometry"];
             NSArray *calculatedMiles = [self getDistanceFromCurrentLocation:[geometry valueForKey:@"location"]];
@@ -144,8 +139,7 @@
                 }
                 
             } else {
-                for (int i=0; i<[[results valueForKey:@"name"] count]; i++)
-                {
+                for (int i=0; i<[[results valueForKey:@"name"] count]; i++) {
                     NSDictionary *dict = @{
                                            @"name":[[results valueForKey:@"name"] objectAtIndex:i],
                                            @"vicinity":[[results valueForKey:@"vicinity"] objectAtIndex:i],
@@ -163,15 +157,12 @@
             NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"doubleValue" ascending:YES];
             NSArray *sortedArray = [mile sortedArrayUsingDescriptors:[NSArray arrayWithObject:sort]];
             NSMutableArray* myArray = [[NSMutableArray alloc] init];
-            for (NSString *numberString in sortedArray)
-            {
+            for (NSString *numberString in sortedArray) {
                 [myArray addObjectsFromArray:[numberString componentsSeparatedByString:@","]];
             }
             NSMutableArray* indexArray = [[NSMutableArray alloc] init];
-            for (int i=0; i<[myArray count]; i++)
-            {
-                if (i%2!=0)
-                {
+            for (int i=0; i<[myArray count]; i++) {
+                if (i%2!=0) {
                     [indexArray addObject:[myArray objectAtIndex:i]];
                 }
             }
@@ -180,8 +171,7 @@
             calculatedMiles = nil;
             
             NSMutableArray *sortedAccordingToMiles = [[NSMutableArray alloc] initWithCapacity:[indexArray count]];
-            for (int i = 0; i<[indexArray count]; i++)
-            {
+            for (int i = 0; i<[indexArray count]; i++) {
                 [sortedAccordingToMiles addObject:[self.secondTimeConnectionArray objectAtIndex:[[indexArray objectAtIndex:i] integerValue]]];
             }
             self.secondTimeConnectionArray = nil;
@@ -199,16 +189,21 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self setTheDataInTheTableView];
             });
-        }else
-        {
+        } else {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.customActivityIndicator stopAnimating];
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"We are sorry!!"
-                                                                message:[NSString stringWithFormat:@"We didn't find any %@ open at this time near your current location. Please try again later.", self.titleString]
-                                                               delegate:self
-                                                      cancelButtonTitle:@"OK"
-                                                      otherButtonTitles:nil];
-                [alert show];
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"We are sorry!!" message:[NSString stringWithFormat:@"We didn't find any %@ open at this time near your current location. Please try again later.", self.titleString] preferredStyle:UIAlertControllerStyleAlert];
+                
+                __weak typeof(self)weakSelf = self;
+                // add actions
+                UIAlertAction *actionOK = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    NSArray *viewControllers = weakSelf.navigationController.viewControllers;
+                    [weakSelf.navigationController popToViewController:[viewControllers firstObject] animated:YES];
+                }];
+                [alert addAction:actionOK];
+                
+                // show alert
+                [self presentViewController:alert animated:YES completion:nil];
             });
         }
     }];
@@ -216,31 +211,21 @@
     [secondTask resume];
 }
 
--(void)setTheDataInTheTableView
-{
+-(void)setTheDataInTheTableView {
     [self.customActivityIndicator stopAnimating];
     [self.customSelectionTableView reloadData];
 }
 
-#pragma mark - AlertView delegate methods
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    NSArray *viewControllers = self.navigationController.viewControllers;
-    [self.navigationController popToViewController:[viewControllers firstObject] animated:YES];
-}
-
 #pragma mark - Table view datasource methods
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.namesArray count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ResultsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ResultsTableViewCell"];
     
     cell.nameLabel.text = [self.namesArray objectAtIndex:indexPath.row];
@@ -262,47 +247,45 @@
     return 74;
 }
 
--(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     // Remove seperator inset
-    if ([cell respondsToSelector:@selector(setSeparatorInset:)])
-    {
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
         [cell setSeparatorInset:UIEdgeInsetsZero];
     }
     // Prevent the cell from inheriting the Table View's margin settings
-    if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)])
-    {
+    if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
         [cell setPreservesSuperviewLayoutMargins:NO];
     } // Explictly set your cell's layout margins
-    if ([cell respondsToSelector:@selector(setLayoutMargins:)])
-    {
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
         [cell setLayoutMargins:UIEdgeInsetsZero];
     }
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
 #pragma mark - Segue methods
-- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
-{
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
     Reachability * reach = [Reachability reachabilityWithHostname:GOOGLE_WEBSITE];
-    if ([reach isReachable])
-    {
+    if ([reach isReachable]) {
         return YES;
-    }else
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"We are sorry!!"
-                                                        message:@"Please connect to the internet to proceed."
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
+    } else {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"No Network" message:@"Please connect to the internet to proceed." preferredStyle:UIAlertControllerStyleAlert];
+        
+        // add actions
+        UIAlertAction *actionOK = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:actionOK];
+        
+        // show alert
+        [self presentViewController:alert animated:YES completion:nil];
+        
         return NO;
     }
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([[segue identifier] isEqualToString:@"placeDetails"])
-    {
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([[segue identifier] isEqualToString:@"placeDetails"]) {
         ResultsTableViewCell *cell = (ResultsTableViewCell *)sender;
         NSIndexPath *indexPath = [self.customSelectionTableView indexPathForSelectedRow];
         NSString *placeID = [self.placeIDArray objectAtIndex:indexPath.row];
@@ -311,6 +294,4 @@
         detailViewController.titleString = cell.nameLabel.text;
     }
 }
-
-
 @end

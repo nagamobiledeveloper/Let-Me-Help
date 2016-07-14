@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3093A5981ACE0BB7003930C7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3098C8181ACCB5D200EBB8D1 /* Main.storyboard */; };
-		3093A5991ACE0BB7003930C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3098C8901ACCD7B100EBB8D1 /* Images.xcassets */; };
 		3093A5A31ACE0C02003930C7 /* LMHResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3093A5911ACE0BA1003930C7 /* LMHResources.bundle */; };
 		3098C7E51ACCB4CE00EBB8D1 /* LocationObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 3098C7E41ACCB4CE00EBB8D1 /* LocationObject.m */; };
 		3098C7E81ACCB4DB00EBB8D1 /* Annotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3098C7E71ACCB4DB00EBB8D1 /* Annotation.m */; };
@@ -23,6 +22,7 @@
 		3098C8061ACCB56200EBB8D1 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 3098C8051ACCB56200EBB8D1 /* Reachability.m */; };
 		3098C8091ACCB57C00EBB8D1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3098C8081ACCB57C00EBB8D1 /* AppDelegate.m */; };
 		3098C8911ACCD7B100EBB8D1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3098C8901ACCD7B100EBB8D1 /* Images.xcassets */; };
+		30C5894D1CD8531000C0E643 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3098C8901ACCD7B100EBB8D1 /* Images.xcassets */; };
 		4465C8D21946605B00DA5670 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4465C8D11946605B00DA5670 /* CoreData.framework */; };
 		4466FE611935637200EC7504 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4466FE601935637200EC7504 /* Foundation.framework */; };
 		4466FE631935637200EC7504 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4466FE621935637200EC7504 /* CoreGraphics.framework */; };
@@ -33,6 +33,12 @@
 		447CAA2B197832910022842C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 447CAA2A197832910022842C /* MapKit.framework */; };
 		44F8FDED1981BAAA0003AC5D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44F8FDEC1981BAAA0003AC5D /* Security.framework */; };
 		44F8FDEF1981BAB30003AC5D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44F8FDEE1981BAB30003AC5D /* SystemConfiguration.framework */; };
+		661E25651CD6E03600D75223 /* backward.png in Resources */ = {isa = PBXBuildFile; fileRef = 661E25631CD6E03600D75223 /* backward.png */; };
+		661E25661CD6E03600D75223 /* forward.png in Resources */ = {isa = PBXBuildFile; fileRef = 661E25641CD6E03600D75223 /* forward.png */; };
+		661E25681CD6E13F00D75223 /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 661E25671CD6E13F00D75223 /* delete.png */; };
+		661E256A1CD6EAE300D75223 /* web.png in Resources */ = {isa = PBXBuildFile; fileRef = 661E25691CD6EAE300D75223 /* web.png */; };
+		6630DDCD1CD1AFB700241F3C /* LaunchStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6630DDCC1CD1AFB700241F3C /* LaunchStoryboard.storyboard */; };
+		6630DDCE1CD1AFD800241F3C /* LaunchStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6630DDCC1CD1AFB700241F3C /* LaunchStoryboard.storyboard */; };
 		66A28D9C1AF5A08C00FCB670 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A28D9B1AF5A08C00FCB670 /* WebViewController.m */; };
 		66A28D9D1AF5AB1B00FCB670 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3098C8181ACCB5D200EBB8D1 /* Main.storyboard */; };
 /* End PBXBuildFile section */
@@ -77,7 +83,7 @@
 		3098C8181ACCB5D200EBB8D1 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Model/Main.storyboard; sourceTree = "<group>"; };
 		3098C8901ACCD7B100EBB8D1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		4465C8D11946605B00DA5670 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		4466FE5D1935637200EC7504 /* "Open Now".app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "\"Open Now\".app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4466FE5D1935637200EC7504 /* Whatz Open.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Whatz Open.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4466FE601935637200EC7504 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4466FE621935637200EC7504 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		4466FE641935637200EC7504 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -89,6 +95,11 @@
 		447CAA2A197832910022842C /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		44F8FDEC1981BAAA0003AC5D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		44F8FDEE1981BAB30003AC5D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		661E25631CD6E03600D75223 /* backward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backward.png; sourceTree = "<group>"; };
+		661E25641CD6E03600D75223 /* forward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = forward.png; sourceTree = "<group>"; };
+		661E25671CD6E13F00D75223 /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete.png; sourceTree = "<group>"; };
+		661E25691CD6EAE300D75223 /* web.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = web.png; sourceTree = "<group>"; };
+		6630DDCC1CD1AFB700241F3C /* LaunchStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchStoryboard.storyboard; path = Views/LaunchStoryboard.storyboard; sourceTree = "<group>"; };
 		66A28D9A1AF5A08C00FCB670 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebViewController.h; path = ViewControllers/WebViewController.h; sourceTree = "<group>"; };
 		66A28D9B1AF5A08C00FCB670 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebViewController.m; path = ViewControllers/WebViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -177,6 +188,7 @@
 		443C952919BE11D4000FEFE9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				6630DDCC1CD1AFB700241F3C /* LaunchStoryboard.storyboard */,
 				3098C8181ACCB5D200EBB8D1 /* Main.storyboard */,
 				3098C7EE1ACCB50D00EBB8D1 /* ResultsTableViewCell.h */,
 				3098C7EF1ACCB50D00EBB8D1 /* ResultsTableViewCell.m */,
@@ -217,7 +229,7 @@
 		4466FE5E1935637200EC7504 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4466FE5D1935637200EC7504 /* "Open Now".app */,
+				4466FE5D1935637200EC7504 /* Whatz Open.app */,
 				3093A5911ACE0BA1003930C7 /* LMHResources.bundle */,
 			);
 			name = Products;
@@ -252,6 +264,7 @@
 		4466FE671935637200EC7504 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				6630DDBF1CD187A100241F3C /* images */,
 				3098C8901ACCD7B100EBB8D1 /* Images.xcassets */,
 				3098C8071ACCB57C00EBB8D1 /* AppDelegate.h */,
 				3098C8081ACCB57C00EBB8D1 /* AppDelegate.m */,
@@ -270,6 +283,17 @@
 				3098C8051ACCB56200EBB8D1 /* Reachability.m */,
 			);
 			name = Reachability;
+			sourceTree = "<group>";
+		};
+		6630DDBF1CD187A100241F3C /* images */ = {
+			isa = PBXGroup;
+			children = (
+				661E25691CD6EAE300D75223 /* web.png */,
+				661E25671CD6E13F00D75223 /* delete.png */,
+				661E25631CD6E03600D75223 /* backward.png */,
+				661E25641CD6E03600D75223 /* forward.png */,
+			);
+			name = images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -307,7 +331,7 @@
 			);
 			name = "Let Me Help";
 			productName = "Let Me Help";
-			productReference = 4466FE5D1935637200EC7504 /* "Open Now".app */;
+			productReference = 4466FE5D1935637200EC7504 /* Whatz Open.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -316,7 +340,7 @@
 		4466FE551935637200EC7504 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = Naga;
 				TargetAttributes = {
 					3093A5901ACE0BA1003930C7 = {
@@ -356,8 +380,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				661E256A1CD6EAE300D75223 /* web.png in Resources */,
+				661E25681CD6E13F00D75223 /* delete.png in Resources */,
+				30C5894D1CD8531000C0E643 /* Images.xcassets in Resources */,
+				6630DDCE1CD1AFD800241F3C /* LaunchStoryboard.storyboard in Resources */,
 				3093A5981ACE0BB7003930C7 /* Main.storyboard in Resources */,
-				3093A5991ACE0BB7003930C7 /* Images.xcassets in Resources */,
+				661E25651CD6E03600D75223 /* backward.png in Resources */,
+				661E25661CD6E03600D75223 /* forward.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,6 +395,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3093A5A31ACE0C02003930C7 /* LMHResources.bundle in Resources */,
+				6630DDCD1CD1AFB700241F3C /* LaunchStoryboard.storyboard in Resources */,
 				3098C8911ACCD7B100EBB8D1 /* Images.xcassets in Resources */,
 				4466FE6B1935637200EC7504 /* InfoPlist.strings in Resources */,
 				66A28D9D1AF5AB1B00FCB670 /* Main.storyboard in Resources */,
@@ -440,6 +470,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.naga.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -461,6 +492,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.naga.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -487,6 +519,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -501,7 +534,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -534,7 +567,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -545,14 +578,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Let Me Help/Let Me Help-Prefix.pch";
 				INFOPLIST_FILE = "Let Me Help/Let Me Help-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				PRODUCT_NAME = "\"Open Now\"";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.naga.Let-Me-Help";
+				PRODUCT_NAME = "Whatz Open";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -563,14 +596,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Let Me Help/Let Me Help-Prefix.pch";
 				INFOPLIST_FILE = "Let Me Help/Let Me Help-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				PRODUCT_NAME = "\"Open Now\"";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.naga.Let-Me-Help";
+				PRODUCT_NAME = "Whatz Open";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;

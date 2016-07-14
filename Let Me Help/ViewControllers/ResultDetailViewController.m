@@ -54,20 +54,18 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closePopOver) name:UIApplicationDidEnterBackgroundNotification object:nil];
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = self.titleString;
+    self.navigationItem.title = self.titleString;;
     [self.customActivityIndicator startAnimating];
     self.location = [LocationObject getInstance];
-    NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"%@placeid=%@&key=%@", GOOGLE_SEARCH_DETAILS, self.placeID, GOOGLE_SEARCH_KEY]];
+    NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"%@placeid=%@&key=%@", PLACE_DETAILS_API, self.placeID, SEARCH_KEY]];
     
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (!error)
-        {
+        if (!error) {
             id jsonData = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
             NSArray *result = [jsonData valueForKey:@"result"];
             
@@ -77,13 +75,18 @@
             self.website = [result valueForKey:@"website"];
             NSDictionary *openHours = [result valueForKey:@"opening_hours"];
             NSArray *weekHours = [openHours valueForKey:@"weekday_text"];
+            NSMutableArray *weeks;
+            if (weekHours != NULL && weekHours.count == 7) {
+                weeks = [[NSMutableArray alloc] initWithArray:weekHours];
+                id object = [weeks objectAtIndex:6];
+                [weeks removeObjectAtIndex:6];
+                [weeks insertObject:object atIndex:0];
+            }
             
-            
-            CFAbsoluteTime at = CFAbsoluteTimeGetCurrent();
-            CFTimeZoneRef tz = CFTimeZoneCopySystem();
-            NSInteger weekday = CFAbsoluteTimeGetDayOfWeek(at, tz);
-            
-            self.hours = [weekHours objectAtIndex:weekday-1];
+            NSCalendarUnit dayOfTheWeek = [[NSCalendar currentCalendar] component:NSCalendarUnitWeekday fromDate:[NSDate date]];
+            if (weeks != NULL) {
+                self.hours = [weeks objectAtIndex:dayOfTheWeek-1];
+            }
             
             NSArray *geometry = [result valueForKey:@"geometry"];
             NSArray *location = [geometry valueForKey:@"location"];
@@ -99,30 +102,25 @@
     [dataTask resume];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
--(void)viewWillDisappear:(BOOL)animated
-{
+-(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+-(void)dealloc {
+    NSLog(@"%@ %@", self, NSStringFromSelector(_cmd));
+}
+
 #pragma mark - Actions
-- (IBAction)phoneButtonSelected:(id)sender
-{
-    if (self.phone != nil)
-    {
+- (IBAction)phoneButtonSelected:(id)sender {
+    if (self.phone != nil) {
         NSString *phoneNumber = [@"telprompt://" stringByAppendingString:self.phone];
         NSURL *rul = [NSURL URLWithString: [phoneNumber stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
         [[UIApplication sharedApplication] openURL:rul];
     }
 }
 
-- (IBAction)takeMeHereButtonClicked:(id)sender
-{
+- (IBAction)takeMeHereButtonClicked:(id)sender {
     self.location.locationName = self.name;
     self.location.latitude =  self.latitude;
     self.location.longitude = self.longitude;
@@ -139,7 +137,7 @@
     if (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad) {
         NSBundle *lmsBundle = [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"LMHResources" ofType:@"bundle"]];
         
-        //now load and show updated results popover
+        // now load and show updated results popover
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:lmsBundle];
         
         UINavigationController *popoverNavigationViewController = [storyboard instantiateViewControllerWithIdentifier:@"popOverMapsNavigationVC"];
@@ -151,7 +149,7 @@
         self.popoverVC = [[UIPopoverController alloc] initWithContentViewController:popoverNavigationViewController];
         [self.popoverVC presentPopoverFromRect:[self.takeMeHereButtonOutlet frame] inView:[self view] permittedArrowDirections:UIPopoverArrowDirectionUp|UIPopoverArrowDirectionDown animated:YES];
         
-    }else {
+    } else {
         self.customActionSheet.tag = 1;
         [self.customActionSheet showInView:[UIApplication sharedApplication].keyWindow];
     }
@@ -159,20 +157,19 @@
 }
 
 #pragma mark - Action sheet delegate methods
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (actionSheet == self.customActionSheet) {
         [self.customActionSheet resignFirstResponder];
         if (buttonIndex == BUTTON_INDEX_TWO) {
             self.googleMapsActionSheet = [[UIActionSheet alloc] initWithTitle:@"Select" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:DRIVING, TRANSIT, WALKING,nil];
             self.googleMapsActionSheet.tag = 1;
             [self.googleMapsActionSheet showInView:[UIApplication sharedApplication].keyWindow];
-        }else if(buttonIndex == BUTTON_INDEX_ZERO) {
-            self.appleMapsActionSheet = [[UIActionSheet alloc] initWithTitle:@"Select" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:DRIVING, WALKING,nil];
+        } else if(buttonIndex == BUTTON_INDEX_ZERO) {
+            self.appleMapsActionSheet = [[UIActionSheet alloc] initWithTitle:@"Select" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:DRIVING, TRANSIT, WALKING,nil];
             self.appleMapsActionSheet.tag = 1;
             [self.appleMapsActionSheet showInView:[UIApplication sharedApplication].keyWindow];
         }
-    }else if (actionSheet == self.googleMapsActionSheet) {
+    } else if (actionSheet == self.googleMapsActionSheet && buttonIndex < 3) {
         NSURL *url;
         if (buttonIndex == BUTTON_INDEX_ZERO) {
             url = [NSURL URLWithString:[NSString stringWithFormat:@"comgooglemaps://?daddr=%f,%f&directionsmode=driving", self.latitude, self.longitude]];
@@ -181,8 +178,10 @@
         } else if (buttonIndex == BUTTON_INDEX_TWO) {
             url = [NSURL URLWithString:[NSString stringWithFormat:@"comgooglemaps://?daddr=%f,%f&directionsmode=walking", self.latitude, self.longitude]];
         }
-        [[UIApplication sharedApplication] openURL:url];
-    }else if (actionSheet == self.appleMapsActionSheet){
+        if (url != nil) {
+            [[UIApplication sharedApplication] openURL:url];
+        }
+    } else if (actionSheet == self.appleMapsActionSheet && buttonIndex < 3){
         CLLocationCoordinate2D endingCoord = CLLocationCoordinate2DMake(self.latitude, self.longitude);
         MKPlacemark *endLocation = [[MKPlacemark alloc] initWithCoordinate:endingCoord addressDictionary:nil];
         MKMapItem *endingItem = [[MKMapItem alloc] initWithPlacemark:endLocation];
@@ -190,16 +189,19 @@
         NSMutableDictionary *launchOptions = [[NSMutableDictionary alloc] init];
         if (buttonIndex == BUTTON_INDEX_ZERO) {
             [launchOptions setObject:MKLaunchOptionsDirectionsModeDriving forKey:MKLaunchOptionsDirectionsModeKey];
-        }else if (buttonIndex == BUTTON_INDEX_ONE) {
+        } else if (buttonIndex == BUTTON_INDEX_ONE) {
+            [launchOptions setObject:MKLaunchOptionsDirectionsModeTransit forKey:MKLaunchOptionsDirectionsModeKey];
+        } else if (buttonIndex == BUTTON_INDEX_TWO) {
             [launchOptions setObject:MKLaunchOptionsDirectionsModeWalking forKey:MKLaunchOptionsDirectionsModeKey];
         }
-        [endingItem openInMapsWithLaunchOptions:launchOptions];
+        if (launchOptions != nil) {
+            [endingItem openInMapsWithLaunchOptions:launchOptions];
+        }
     }
 }
 
 #pragma mark - Helper methods
-- (void)displayInformationOnTheView
-{
+- (void)displayInformationOnTheView {
     [self.customActivityIndicator stopAnimating];
     self.customMapView.delegate = self;
     
@@ -224,7 +226,7 @@
     Annotation *myAnn;
     NSMutableArray *annotationObjects = [[NSMutableArray alloc]init];
     
-    //Adding different annotations
+    // Adding different annotations
     myAnn = [[Annotation alloc]init];
     myAnn.coordinate = pinCordinate;
     myAnn.title = self.name;
@@ -235,14 +237,18 @@
     [self.customMapView setRegion:region animated:YES];
     
     if (self.website != nil && ![self.website isKindOfClass:[NSNull class]]) {
-        UIBarButtonItem *websiteButton = [[UIBarButtonItem alloc] initWithTitle:@"Website" style:UIBarButtonItemStylePlain target:self action:@selector(showWebsite)];
+        NSBundle *lmhBundle = [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"LMHResources" ofType:@"bundle"]];
+        NSString *path = [lmhBundle pathForResource:@"web" ofType:@"png"];
+        UIImage* webImage = [UIImage imageWithContentsOfFile:path];
+        
+        UIBarButtonItem *websiteButton = [[UIBarButtonItem alloc] initWithImage:webImage style:UIBarButtonItemStylePlain target:self action:@selector(showWebsite)];
+        
         websiteButton.tintColor = [UIColor blueColor];
         self.navigationItem.rightBarButtonItem = websiteButton;
     }
 }
 
-- (void)closePopOver
-{
+- (void)closePopOver {
     if (self.popoverVC && self.popoverVC.isPopoverVisible) {
         [self.popoverVC dismissPopoverAnimated:NO];
         self.popoverVC = nil;
@@ -252,7 +258,7 @@
 - (void)showWebsite {
     NSBundle *lmsBundle = [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"LMHResources" ofType:@"bundle"]];
     
-    //now load and show updated results popover
+    // now load and show updated results popover
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:lmsBundle];
     
     WebViewController *webViewController = [storyboard instantiateViewControllerWithIdentifier:@"webViewController"];
