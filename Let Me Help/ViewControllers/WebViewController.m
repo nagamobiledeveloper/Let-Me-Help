@@ -7,14 +7,17 @@
 //
 
 #import "WebViewController.h"
+#import <WebKit/WebKit.h>
 
-@interface WebViewController ()<UIWebViewDelegate>
+@interface WebViewController ()<WKNavigationDelegate>
 
-@property (weak, nonatomic) IBOutlet UIWebView *customWebView;
+@property (weak, nonatomic) IBOutlet UIView *webViewContainer;
 - (IBAction)doneButtonPressed:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *goBackButton;
 @property (weak, nonatomic) IBOutlet UIButton *goForwardButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *domainLabel;
+@property (weak, nonatomic) IBOutlet UIProgressView *progressView;
+@property (strong, nonatomic) IBOutlet WKWebView *customWebView;
 @end
 
 @implementation WebViewController
@@ -22,49 +25,63 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.customWebView.delegate = self;
+    WKWebViewConfiguration *wkConfiguration = [[WKWebViewConfiguration alloc] init];
+    self.customWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, 0, 0) configuration:wkConfiguration];
+    
+    self.customWebView.navigationDelegate = self;
+    self.customWebView.allowsBackForwardNavigationGestures = YES;
+    
+    [self.customWebView addObserver:self forKeyPath:NSStringFromSelector(@selector(estimatedProgress)) options:NSKeyValueObservingOptionNew context:NULL];
+    
     [self setBackAndForwardButtons];
     
-    UISwipeGestureRecognizer *swipeGestureLeft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeGesture:)];
-    UISwipeGestureRecognizer *swipeGestureRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeGesture:)];
-    
-    // Set swipe direction
-    [swipeGestureLeft setDirection:UISwipeGestureRecognizerDirectionLeft];
-    [swipeGestureRight setDirection:UISwipeGestureRecognizerDirectionRight];
-    
-    // Adding the swipe gesture to customWebView
-    [self.customWebView addGestureRecognizer:swipeGestureLeft];
-    [self.customWebView addGestureRecognizer:swipeGestureRight];
-    
     [self.domainLabel setTitleTextAttributes:@{
-                                         NSFontAttributeName: [UIFont fontWithName:@"Helvetica-Bold" size:20.0],
-                                         NSForegroundColorAttributeName: [UIColor blackColor]
-                                         } forState:UIControlStateNormal];
+                                               NSFontAttributeName: [UIFont fontWithName:@"Helvetica-Bold" size:20.0],
+                                               NSForegroundColorAttributeName: [UIColor blackColor]
+                                               } forState:UIControlStateNormal];
     
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.url]];
     [self.customWebView loadRequest:request];
+    [self.webViewContainer addSubview:self.customWebView];
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    CGSize containerSize = self.webViewContainer.frame.size;
+    CGRect webViewFrame = CGRectMake(0, 0, containerSize.width, containerSize.height);
+    if (!CGRectEqualToRect(self.customWebView.frame, webViewFrame)) {
+        self.customWebView.frame = webViewFrame;
+    }
 }
 
 -(void)dealloc {
+    if ([self isViewLoaded]) {
+        [self.customWebView removeObserver:self forKeyPath:NSStringFromSelector(@selector(estimatedProgress))];
+    }
+    
     NSLog(@"%@ %@", self, NSStringFromSelector(_cmd));
 }
 
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-    if (self.url != nil && ![self.url isKindOfClass:[NSNull class]]) {
-        return YES;
+#pragma mark -  WebView delegates
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
+    WKNavigationActionPolicy decision = WKNavigationActionPolicyAllow;
+    [self updateDomain:webView.URL];
+    if (self.url == nil || [self.url isKindOfClass:[NSNull class]]) {
+        decision = WKNavigationActionPolicyCancel;
     }
-    return NO;
+    
+    decisionHandler(decision);
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
-    [self setBackAndForwardButtons];
-    [self updateDomain:webView.request.URL];
-}
-
--(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
     [self setBackAndForwardButtons];
 }
 
+- (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error {
+    [self setBackAndForwardButtons];
+}
+
+#pragma mark -  Helper methods
 - (IBAction)doneButtonPressed:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -99,16 +116,6 @@
     }
 }
 
-- (void)handleSwipeGesture:(UISwipeGestureRecognizer *)swipe {
-    if (swipe.direction == UISwipeGestureRecognizerDirectionLeft) {
-        [self webViewGoForwardPressed:nil];
-    } else if (swipe.direction == UISwipeGestureRecognizerDirectionRight) {
-        [self webViewGoBackPressed:nil];
-    } 
-    
-    [self setBackAndForwardButtons];
-}
-
 - (void)updateDomain:(NSURL *)url {
     if (![url isKindOfClass:[NSNull class]] && url != nil) {
         NSString *domain = [[NSMutableString alloc] initWithString:[url host]];
@@ -118,6 +125,19 @@
                 self.domainLabel.title = domain;
             }
         }
+    }
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([keyPath isEqualToString:NSStringFromSelector(@selector(estimatedProgress))] && object == self.customWebView) {
+        if(self.customWebView.estimatedProgress == 1.0) {
+            [self.progressView setProgress:0.0 animated:NO];
+        } else {
+            [self.progressView setProgress:self.customWebView.estimatedProgress animated:YES];
+        }
+    }
+    else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
 }
 @end

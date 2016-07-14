@@ -324,13 +324,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <webView multipleTouchEnabled="YES" contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mFR-dz-Vdp">
-                                <rect key="frame" x="0.0" y="64" width="600" height="492"/>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="mDw-NZ-qyD">
+                                <rect key="frame" x="0.0" y="64" width="600" height="2"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
-                            </webView>
+                                <color key="progressTintColor" red="0.055195456660000003" green="0.50548070789999999" blue="0.090875914919999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="trackTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </progressView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SOR-os-Upo">
                                 <rect key="frame" x="0.0" y="20" width="600" height="44"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="T9L-W2-kX0"/>
                                     <barButtonItem id="fFN-9N-mTg">
@@ -344,9 +346,11 @@
                                         </connections>
                                     </barButtonItem>
                                 </items>
+                                <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </toolbar>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="db5-26-PlG">
                                 <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <items>
                                     <barButtonItem style="plain" id="SLd-of-yeR">
                                         <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="B47-rc-8Pv">
@@ -382,29 +386,47 @@
                                         </connections>
                                     </barButtonItem>
                                 </items>
+                                <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </toolbar>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pzd-qR-COb">
+                                <rect key="frame" x="0.0" y="66" width="600" height="490"/>
+                                <color key="backgroundColor" red="0.055195456660000003" green="0.50548070789999999" blue="0.090875914919999995" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="mFR-dz-Vdp" firstAttribute="leading" secondItem="27R-2M-U9j" secondAttribute="leading" id="EZr-6q-kMT"/>
-                            <constraint firstItem="db5-26-PlG" firstAttribute="top" secondItem="mFR-dz-Vdp" secondAttribute="bottom" id="Lmb-I2-Nkq"/>
-                            <constraint firstAttribute="trailing" secondItem="mFR-dz-Vdp" secondAttribute="trailing" id="RRi-Aw-0mI"/>
-                            <constraint firstItem="db5-26-PlG" firstAttribute="leading" secondItem="mFR-dz-Vdp" secondAttribute="leading" id="Uvp-0y-gvt"/>
-                            <constraint firstItem="Fmb-rX-ib0" firstAttribute="top" secondItem="mFR-dz-Vdp" secondAttribute="bottom" constant="44" id="hlx-lT-xs4"/>
-                            <constraint firstItem="mFR-dz-Vdp" firstAttribute="top" secondItem="SOR-os-Upo" secondAttribute="bottom" id="m73-My-RDY"/>
-                            <constraint firstItem="Fmb-rX-ib0" firstAttribute="top" secondItem="db5-26-PlG" secondAttribute="bottom" id="md5-sT-dyl"/>
-                            <constraint firstItem="db5-26-PlG" firstAttribute="trailing" secondItem="mFR-dz-Vdp" secondAttribute="trailing" id="mxI-6p-mD2"/>
-                            <constraint firstAttribute="trailing" secondItem="SOR-os-Upo" secondAttribute="trailing" id="pWc-ga-74n"/>
-                            <constraint firstItem="SOR-os-Upo" firstAttribute="top" secondItem="Obf-ro-jR1" secondAttribute="bottom" id="t9E-I7-1Nf"/>
-                            <constraint firstItem="mFR-dz-Vdp" firstAttribute="top" secondItem="SOR-os-Upo" secondAttribute="bottom" id="tIu-Ow-WjF"/>
-                            <constraint firstItem="SOR-os-Upo" firstAttribute="leading" secondItem="27R-2M-U9j" secondAttribute="leading" id="u82-cP-8aK"/>
+                            <constraint firstAttribute="trailing" secondItem="Pzd-qR-COb" secondAttribute="trailing" id="262-Ph-gSV"/>
+                            <constraint firstItem="Pzd-qR-COb" firstAttribute="top" secondItem="SOR-os-Upo" secondAttribute="bottom" id="2oH-pm-rdj"/>
+                            <constraint firstItem="db5-26-PlG" firstAttribute="top" secondItem="Pzd-qR-COb" secondAttribute="bottom" id="3oU-Gb-4zZ"/>
+                            <constraint firstAttribute="trailing" secondItem="mDw-NZ-qyD" secondAttribute="trailing" id="7CP-Dk-ONK"/>
+                            <constraint firstItem="db5-26-PlG" firstAttribute="bottom" secondItem="Fmb-rX-ib0" secondAttribute="top" id="9gt-SV-OI6"/>
+                            <constraint firstItem="SOR-os-Upo" firstAttribute="leading" secondItem="27R-2M-U9j" secondAttribute="leading" id="C3x-WR-8xX"/>
+                            <constraint firstItem="Pzd-qR-COb" firstAttribute="leading" secondItem="27R-2M-U9j" secondAttribute="leading" id="GJo-Cb-Gph"/>
+                            <constraint firstItem="db5-26-PlG" firstAttribute="leading" secondItem="27R-2M-U9j" secondAttribute="leading" id="IO2-21-wf7"/>
+                            <constraint firstItem="db5-26-PlG" firstAttribute="trailing" secondItem="SOR-os-Upo" secondAttribute="trailing" id="Ime-fR-hiy"/>
+                            <constraint firstItem="db5-26-PlG" firstAttribute="top" secondItem="Pzd-qR-COb" secondAttribute="bottom" id="Lob-nW-9sa"/>
+                            <constraint firstItem="SOR-os-Upo" firstAttribute="top" secondItem="Obf-ro-jR1" secondAttribute="bottom" id="PMG-sY-nVk"/>
+                            <constraint firstAttribute="trailing" secondItem="db5-26-PlG" secondAttribute="trailing" id="cMk-m2-Wbt"/>
+                            <constraint firstItem="db5-26-PlG" firstAttribute="leading" secondItem="SOR-os-Upo" secondAttribute="leading" id="ja1-aB-LV0"/>
+                            <constraint firstItem="mDw-NZ-qyD" firstAttribute="top" secondItem="SOR-os-Upo" secondAttribute="bottom" id="qTo-1s-Gmq"/>
+                            <constraint firstItem="Pzd-qR-COb" firstAttribute="leading" secondItem="SOR-os-Upo" secondAttribute="leading" id="ssd-Lg-4oI"/>
+                            <constraint firstAttribute="trailing" secondItem="SOR-os-Upo" secondAttribute="trailing" id="vMj-I0-bcd"/>
+                            <constraint firstItem="Pzd-qR-COb" firstAttribute="top" secondItem="mDw-NZ-qyD" secondAttribute="bottom" id="wry-dF-JXo"/>
+                            <constraint firstItem="mDw-NZ-qyD" firstAttribute="leading" secondItem="27R-2M-U9j" secondAttribute="leading" id="zow-fq-rf5"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="2oH-pm-rdj"/>
+                                <exclude reference="ssd-Lg-4oI"/>
+                                <exclude reference="Lob-nW-9sa"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
-                        <outlet property="customWebView" destination="mFR-dz-Vdp" id="Z4e-PR-9ir"/>
                         <outlet property="domainLabel" destination="fFN-9N-mTg" id="kgx-yZ-K3t"/>
                         <outlet property="goBackButton" destination="B47-rc-8Pv" id="nwi-U5-0wx"/>
                         <outlet property="goForwardButton" destination="E9o-30-Xfh" id="Zm7-RF-v9G"/>
+                        <outlet property="progressView" destination="mDw-NZ-qyD" id="qht-x3-qga"/>
+                        <outlet property="webViewContainer" destination="Pzd-qR-COb" id="kwa-iz-4GI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jEL-ff-L50" userLabel="First Responder" sceneMemberID="firstResponder"/>
