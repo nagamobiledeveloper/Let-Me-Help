@@ -393,6 +393,7 @@
                                 <color key="backgroundColor" red="0.055195456660000003" green="0.50548070789999999" blue="0.090875914919999995" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                         </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="Pzd-qR-COb" secondAttribute="trailing" id="262-Ph-gSV"/>
                             <constraint firstItem="Pzd-qR-COb" firstAttribute="top" secondItem="SOR-os-Upo" secondAttribute="bottom" id="2oH-pm-rdj"/>
