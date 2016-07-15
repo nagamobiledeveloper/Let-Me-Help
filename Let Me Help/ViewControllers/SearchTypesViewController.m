@@ -250,4 +250,5 @@
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
     self.customSearchBar.showsCancelButton = NO;
 }
+
 @end

@@ -12,12 +12,12 @@
 @interface WebViewController ()<WKNavigationDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *webViewContainer;
-- (IBAction)doneButtonPressed:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *goBackButton;
 @property (weak, nonatomic) IBOutlet UIButton *goForwardButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *domainLabel;
 @property (weak, nonatomic) IBOutlet UIProgressView *progressView;
 @property (strong, nonatomic) IBOutlet WKWebView *customWebView;
+
 @end
 
 @implementation WebViewController
@@ -120,7 +120,7 @@
     if (![url isKindOfClass:[NSNull class]] && url != nil) {
         NSString *domain = [[NSMutableString alloc] initWithString:[url host]];
         if (domain != nil || ![domain  isEqual: @""]) {
-            domain = [domain stringByReplacingOccurrencesOfString:@"www."                                             withString:@""];
+            domain = [domain stringByReplacingOccurrencesOfString:@"www." withString:@""];
             if (![self.domainLabel.title isEqualToString:domain]) {
                 self.domainLabel.title = domain;
             }

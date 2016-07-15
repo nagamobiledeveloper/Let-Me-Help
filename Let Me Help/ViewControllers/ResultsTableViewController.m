@@ -294,4 +294,5 @@
         detailViewController.titleString = cell.nameLabel.text;
     }
 }
+
 @end

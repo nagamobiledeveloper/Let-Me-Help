@@ -26,8 +26,6 @@
 @property (weak, nonatomic) IBOutlet MKMapView *customMapView;
 @property (weak, nonatomic) IBOutlet UILabel *hoursLabel;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *customActivityIndicator;
-- (IBAction)phoneButtonSelected:(id)sender;
-- (IBAction)takeMeHereButtonClicked:(id)sender;
 
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *address;
